@@ -7,37 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.5.1" />
+    <!-- Pacotes principais do EF Core e Oracle -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="8.23.60" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.6.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Referência ao projeto do modelo -->
     <ProjectReference Include="..\ProspEco.Model\ProspEco.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Migrations\**" />
-    <Compile Remove="ProspEcoContextFactory.cs" />
-    <Compile Remove="ProspEcoContext.cs" />
-    <Compile Remove="ProspEcoDbContextFactory.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Migrations\**" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "He+NyUXbxg0=",
+  "dgSpecHash": "0y9eT4dOEuU=",
   "success": true,
   "projectFilePath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.API.csproj",
   "expectedPackageFiles": [
@@ -14,7 +14,6 @@
     "C:\\Users\\HP\\.nuget\\packages\\csvhelper\\28.0.1\\csvhelper.28.0.1.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\dryioc.dll\\5.4.3\\dryioc.dll.5.4.3.nupkg.sha512",
-    "C:\\Users\\HP\\.nuget\\packages\\entityframework\\6.5.1\\entityframework.6.5.1.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\estat.sdmxsource.extension\\10.2.0\\estat.sdmxsource.extension.10.2.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\estat.sdmxsource.sdmxapi\\10.2.0\\estat.sdmxsource.sdmxapi.10.2.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\estat.sdmxsource.sdmxcore\\10.2.0\\estat.sdmxsource.sdmxcore.10.2.0.nupkg.sha512",
@@ -170,7 +169,6 @@
     "C:\\Users\\HP\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\system.collections.immutable\\8.0.0\\system.collections.immutable.8.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\system.collections.nongeneric\\4.3.0\\system.collections.nongeneric.4.3.0.nupkg.sha512",
-    "C:\\Users\\HP\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\system.composition\\6.0.0\\system.composition.6.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\system.composition.attributedmodel\\6.0.0\\system.composition.attributedmodel.6.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\system.composition.convention\\6.0.0\\system.composition.convention.6.0.0.nupkg.sha512",

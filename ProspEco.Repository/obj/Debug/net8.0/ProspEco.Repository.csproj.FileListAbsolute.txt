@@ -17,7 +17,6 @@ C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\refint\Pros
 C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.pdb
 C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ref\ProspEco.Repository.dll
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Repository.deps.json
-C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Repository.runtimeconfig.json
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Repository.dll
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Repository.pdb
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Database.dll
@@ -34,5 +33,4 @@ C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.Repository\obj\Debug\net8.0\Pro
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.dll
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.Repository\obj\Debug\net8.0\refint\ProspEco.Repository.dll
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.pdb
-C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.genruntimeconfig.cache
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.Repository\obj\Debug\net8.0\ref\ProspEco.Repository.dll

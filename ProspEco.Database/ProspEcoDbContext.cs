@@ -20,16 +20,7 @@ namespace ProspEco.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            // Adicione suas configurações de mapeamento aqui, se necessário
-        }
-        
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                // Configuração de fallback para o tempo de design
-                optionsBuilder.UseOracle("Data Source=oracle.fiap.com.br:1521/orcl;user ID=rm551236;Password=171103;");
-            }
+            // Adicione configurações de mapeamento personalizadas aqui, se necessário.
         }
     }
 }

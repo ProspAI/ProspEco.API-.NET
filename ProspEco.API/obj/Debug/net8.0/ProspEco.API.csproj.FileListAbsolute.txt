@@ -382,8 +382,6 @@ C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\Castle.Cor
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\CsvHelper.dll
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\Dapper.dll
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\DryIoc.dll
-C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\EntityFramework.SqlServer.dll
-C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\EntityFramework.dll
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\Estat.SdmxSource.Extension.dll
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\Estat.SdmxSource.SdmxAPI.dll
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\Estat.SdmxSource.SdmxCore.dll

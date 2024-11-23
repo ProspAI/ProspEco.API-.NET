@@ -123,25 +123,6 @@
           }
         }
       },
-      "EntityFramework/6.5.1": {
-        "dependencies": {
-          "Microsoft.CSharp": "4.7.0",
-          "System.CodeDom": "8.0.0",
-          "System.ComponentModel.Annotations": "5.0.0",
-          "System.Configuration.ConfigurationManager": "8.0.1",
-          "System.Data.SqlClient": "4.8.6"
-        },
-        "runtime": {
-          "lib/netstandard2.1/EntityFramework.SqlServer.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.500.124.31603"
-          },
-          "lib/netstandard2.1/EntityFramework.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.500.124.31603"
-          }
-        }
-      },
       "Estat.SdmxSource.Extension/10.2.0": {
         "dependencies": {
           "Estat.SdmxSource.SdmxAPI": "10.2.0",
@@ -2252,7 +2233,6 @@
           "System.Threading": "4.3.0"
         }
       },
-      "System.ComponentModel.Annotations/5.0.0": {},
       "System.Composition/6.0.0": {
         "dependencies": {
           "System.Composition.AttributedModel": "6.0.0",
@@ -3142,7 +3122,6 @@
       "xunit.runner.visualstudio/2.5.3": {},
       "ProspEco.Database/1.0.0": {
         "dependencies": {
-          "EntityFramework": "6.5.1",
           "Microsoft.EntityFrameworkCore": "8.0.10",
           "Oracle.EntityFrameworkCore": "8.23.60",
           "Oracle.ManagedDataAccess.Core": "23.6.1",
@@ -3300,13 +3279,6 @@
       "sha512": "sha512-yhXOG3SOxeWYxBAWskNRDD8fzw5hriEawv4VN4WKaFHOuubiop4kxe2rkWTEyCnTgRVgxVUSQCDBBkZqwPm1iQ==",
       "path": "dryioc.dll/5.4.3",
       "hashPath": "dryioc.dll.5.4.3.nupkg.sha512"
-    },
-    "EntityFramework/6.5.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-sQRP2lWg1i3aAGWqdliAM8zrGx7LHMUk+9/MoxUjwfTZYGMXvZ2JYZTlyTm1PqDxvn3c9E3U76TWDON7Y5+CVA==",
-      "path": "entityframework/6.5.1",
-      "hashPath": "entityframework.6.5.1.nupkg.sha512"
     },
     "Estat.SdmxSource.Extension/10.2.0": {
       "type": "package",
@@ -4392,13 +4364,6 @@
       "sha512": "sha512-prtjIEMhGUnQq6RnPEYLpFt8AtLbp9yq2zxOSrY7KJJZrw25Fi97IzBqY7iqssbM61Ek5b8f3MG/sG1N2sN5KA==",
       "path": "system.collections.nongeneric/4.3.0",
       "hashPath": "system.collections.nongeneric.4.3.0.nupkg.sha512"
-    },
-    "System.ComponentModel.Annotations/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-dMkqfy2el8A8/I76n2Hi1oBFEbG1SfxD2l5nhwXV3XjlnOmwxJlQbYpJH4W51odnU9sARCSAgv7S3CyAFMkpYg==",
-      "path": "system.componentmodel.annotations/5.0.0",
-      "hashPath": "system.componentmodel.annotations.5.0.0.nupkg.sha512"
     },
     "System.Composition/6.0.0": {
       "type": "package",

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 
 namespace ProspEco.Database
 {
@@ -9,19 +7,12 @@ namespace ProspEco.Database
     {
         public ProspEcoDbContext CreateDbContext(string[] args)
         {
-            // Carregar configurações do appsettings.json
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            // Obter string de conexão do Oracle
-            var connectionString = configuration.GetConnectionString("OracleFIAP");
-
-            // Configurar DbContext para Oracle
+            // Configurar as opções do DbContext
             var optionsBuilder = new DbContextOptionsBuilder<ProspEcoDbContext>();
-            optionsBuilder.UseOracle(connectionString);
-
+            
+            // Adicionar o provedor de banco de dados e a connection string
+            optionsBuilder.UseOracle("Data Source=oracle.fiap.com.br:1521/orcl;user ID=rm551236;Password=171103;");
+            
             return new ProspEcoDbContext(optionsBuilder.Options);
         }
     }
