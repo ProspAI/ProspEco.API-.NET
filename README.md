@@ -144,11 +144,13 @@ Contribuições são bem-vindas! Para contribuir com o projeto, siga as etapas a
 
 ---
 
-## 👨‍💻 Autor
+## Autores
 
-**David Bryan Viana De Sales**  
-Desenvolvedor responsável pela criação da API, implementando soluções práticas e eficientes em projetos de software.  
-**RM**: 551236
+- **AGATHA PIRES** – RM552247 – (2TDSPH)  
+- **DAVID BRYAN VIANA** – RM551236 – (2TDSPM)  
+- **GABRIEL LIMA** – RM99743 – (2TDSPM)  
+- **GIOVANNA ALVAREZ** – RM98892 – (2TDSPM)  
+- **MURILO MATOS** – RM552525 – (2TDSPM)  
 
 ---
 
