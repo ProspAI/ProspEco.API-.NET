@@ -353,3 +353,5 @@ C:\Users\HP\Downloads\novo\novo\ProspEco.API\obj\Debug\net8.0\refint\ProspEco.AP
 C:\Users\HP\Downloads\novo\novo\ProspEco.API\obj\Debug\net8.0\ProspEco.API.pdb
 C:\Users\HP\Downloads\novo\novo\ProspEco.API\obj\Debug\net8.0\ProspEco.API.genruntimeconfig.cache
 C:\Users\HP\Downloads\novo\novo\ProspEco.API\obj\Debug\net8.0\ref\ProspEco.API.dll
+C:\Users\HP\Downloads\novo\novo\ProspEco.API\bin\Debug\net8.0\ProspEco.API.xml
+C:\Users\HP\Downloads\novo\novo\ProspEco.API\obj\Debug\net8.0\ProspEco.API.xml
