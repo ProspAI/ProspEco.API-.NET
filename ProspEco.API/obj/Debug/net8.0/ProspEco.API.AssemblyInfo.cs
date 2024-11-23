@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProspEco.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3079eb702814a3ce1957c047fc4e56c3be1e124f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+017b9bcb0d68f66fb04e91b309594afc458382db")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProspEco.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProspEco.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

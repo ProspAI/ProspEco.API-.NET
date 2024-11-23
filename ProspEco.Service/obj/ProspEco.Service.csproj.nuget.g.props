@@ -14,7 +14,11 @@
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore\8.0.10\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore\8.0.10\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props')" />
+    <Import Project="$(NuGetPackageRoot)entityframework\6.5.1\buildTransitive\net6.0\EntityFramework.props" Condition="Exists('$(NuGetPackageRoot)entityframework\6.5.1\buildTransitive\net6.0\EntityFramework.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.ml\4.0.0\build\netstandard2.0\Microsoft.ML.props" Condition="Exists('$(NuGetPackageRoot)microsoft.ml\4.0.0\build\netstandard2.0\Microsoft.ML.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.ml.recommender\0.22.0\build\netstandard2.0\Microsoft.ML.Recommender.props" Condition="Exists('$(NuGetPackageRoot)microsoft.ml.recommender\0.22.0\build\netstandard2.0\Microsoft.ML.Recommender.props')" />
   </ImportGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgEntityFramework Condition=" '$(PkgEntityFramework)' == '' ">C:\Users\HP\.nuget\packages\entityframework\6.5.1</PkgEntityFramework>
+  </PropertyGroup>
 </Project>

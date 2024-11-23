@@ -139,6 +139,36 @@
           }
         }
       },
+      "EntityFramework/6.5.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "System.CodeDom": "6.0.0",
+          "System.ComponentModel.Annotations": "5.0.0",
+          "System.Configuration.ConfigurationManager": "6.0.1",
+          "System.Data.SqlClient": "4.8.6"
+        },
+        "compile": {
+          "lib/netstandard2.1/EntityFramework.SqlServer.dll": {
+            "related": ".xml"
+          },
+          "lib/netstandard2.1/EntityFramework.dll": {
+            "related": ".SqlServer.xml;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/EntityFramework.SqlServer.dll": {
+            "related": ".xml"
+          },
+          "lib/netstandard2.1/EntityFramework.dll": {
+            "related": ".SqlServer.xml;.xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/EntityFramework.props": {},
+          "buildTransitive/net6.0/EntityFramework.targets": {}
+        }
+      },
       "Estat.SdmxSource.Extension/10.2.0": {
         "type": "package",
         "dependencies": {
@@ -2486,11 +2516,11 @@
           "lib/netstandard2.0/NuGet.Frameworks.dll": {}
         }
       },
-      "Oracle.EntityFrameworkCore/8.23.50": {
+      "Oracle.EntityFrameworkCore/8.23.60": {
         "type": "package",
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Relational": "[8.0.3, 9.0.0)",
-          "Oracle.ManagedDataAccess.Core": "[23.5.0, 24.0.0)"
+          "Oracle.ManagedDataAccess.Core": "[23.6.0, 24.0.0)"
         },
         "compile": {
           "lib/net8.0/Oracle.EntityFrameworkCore.dll": {}
@@ -2514,18 +2544,19 @@
           "lib/net472/Oracle.ManagedDataAccess.dll": {}
         }
       },
-      "Oracle.ManagedDataAccess.Core/23.5.0": {
+      "Oracle.ManagedDataAccess.Core/23.6.1": {
         "type": "package",
         "dependencies": {
           "System.Diagnostics.PerformanceCounter": "8.0.0",
           "System.DirectoryServices.Protocols": "8.0.0",
+          "System.Formats.Asn1": "8.0.1",
           "System.Security.Cryptography.Pkcs": "8.0.0"
         },
         "compile": {
-          "lib/netstandard2.1/Oracle.ManagedDataAccess.dll": {}
+          "lib/net8.0/Oracle.ManagedDataAccess.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/Oracle.ManagedDataAccess.dll": {}
+          "lib/net8.0/Oracle.ManagedDataAccess.dll": {}
         }
       },
       "Org.Sdmx.Resources.SdmxMl.Schemas.V10/10.2.0": {
@@ -3153,6 +3184,19 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Collections.NonGeneric.dll": {}
+        }
+      },
+      "System.ComponentModel.Annotations/5.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.ComponentModel.Annotations.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Composition/6.0.0": {
@@ -4818,8 +4862,10 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
+          "EntityFramework": "6.5.1",
           "Microsoft.EntityFrameworkCore": "8.0.10",
-          "Oracle.EntityFrameworkCore": "8.23.50",
+          "Oracle.EntityFrameworkCore": "8.23.60",
+          "Oracle.ManagedDataAccess.Core": "23.6.1",
           "ProspEco.Model": "1.0.0"
         },
         "compile": {
@@ -5128,6 +5174,68 @@
         "lib/netstandard2.0/DryIoc.xml",
         "lib/netstandard2.1/DryIoc.dll",
         "lib/netstandard2.1/DryIoc.xml"
+      ]
+    },
+    "EntityFramework/6.5.1": {
+      "sha512": "sQRP2lWg1i3aAGWqdliAM8zrGx7LHMUk+9/MoxUjwfTZYGMXvZ2JYZTlyTm1PqDxvn3c9E3U76TWDON7Y5+CVA==",
+      "type": "package",
+      "path": "entityframework/6.5.1",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "README.md",
+        "build/EntityFramework.DefaultItems.props",
+        "build/EntityFramework.props",
+        "build/EntityFramework.targets",
+        "build/Microsoft.Data.Entity.Build.Tasks.dll",
+        "build/net6.0/EntityFramework.props",
+        "build/net6.0/EntityFramework.targets",
+        "buildTransitive/EntityFramework.props",
+        "buildTransitive/EntityFramework.targets",
+        "buildTransitive/net6.0/EntityFramework.props",
+        "buildTransitive/net6.0/EntityFramework.targets",
+        "content/net40/App.config.install.xdt",
+        "content/net40/App.config.transform",
+        "content/net40/Web.config.install.xdt",
+        "content/net40/Web.config.transform",
+        "entityframework.6.5.1.nupkg.sha512",
+        "entityframework.nuspec",
+        "lib/net40/EntityFramework.SqlServer.dll",
+        "lib/net40/EntityFramework.SqlServer.xml",
+        "lib/net40/EntityFramework.dll",
+        "lib/net40/EntityFramework.xml",
+        "lib/net45/EntityFramework.SqlServer.dll",
+        "lib/net45/EntityFramework.SqlServer.xml",
+        "lib/net45/EntityFramework.dll",
+        "lib/net45/EntityFramework.xml",
+        "lib/netstandard2.1/EntityFramework.SqlServer.dll",
+        "lib/netstandard2.1/EntityFramework.SqlServer.xml",
+        "lib/netstandard2.1/EntityFramework.dll",
+        "lib/netstandard2.1/EntityFramework.xml",
+        "tools/EntityFramework6.PS2.psd1",
+        "tools/EntityFramework6.PS2.psm1",
+        "tools/EntityFramework6.psd1",
+        "tools/EntityFramework6.psm1",
+        "tools/about_EntityFramework6.help.txt",
+        "tools/init.ps1",
+        "tools/install.ps1",
+        "tools/net40/any/ef6.exe",
+        "tools/net40/any/ef6.pdb",
+        "tools/net40/win-arm64/ef6.exe",
+        "tools/net40/win-arm64/ef6.pdb",
+        "tools/net40/win-x86/ef6.exe",
+        "tools/net40/win-x86/ef6.pdb",
+        "tools/net45/any/ef6.exe",
+        "tools/net45/any/ef6.pdb",
+        "tools/net45/win-arm64/ef6.exe",
+        "tools/net45/win-arm64/ef6.pdb",
+        "tools/net45/win-x86/ef6.exe",
+        "tools/net45/win-x86/ef6.pdb",
+        "tools/net6.0/any/ef6.dll",
+        "tools/net6.0/any/ef6.pdb",
+        "tools/net6.0/any/ef6.runtimeconfig.json"
       ]
     },
     "Estat.SdmxSource.Extension/10.2.0": {
@@ -8087,17 +8195,17 @@
         "nuget.frameworks.nuspec"
       ]
     },
-    "Oracle.EntityFrameworkCore/8.23.50": {
-      "sha512": "tFL1ErU4/QXSIJdiSu8q3//lEwe1QoiUH3RaioI0MX/Hdx3Waj5xxq3mlgQ/nzVP+0CKTDVXxZloVArRzBJQtA==",
+    "Oracle.EntityFrameworkCore/8.23.60": {
+      "sha512": "+qjaELz10imrQgR84D5ypq32UJO6M9/VC77ko1EuHyhVp53HidPaPX3h3/s2V87lVg4E29p5e2ZP77oGmhYzNA==",
       "type": "package",
-      "path": "oracle.entityframeworkcore/8.23.50",
+      "path": "oracle.entityframeworkcore/8.23.60",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.txt",
         "README.md",
         "lib/net8.0/Oracle.EntityFrameworkCore.dll",
-        "oracle.entityframeworkcore.8.23.50.nupkg.sha512",
+        "oracle.entityframeworkcore.8.23.60.nupkg.sha512",
         "oracle.entityframeworkcore.nuspec",
         "oracle.png"
       ]
@@ -8129,10 +8237,10 @@
         "oracle.png"
       ]
     },
-    "Oracle.ManagedDataAccess.Core/23.5.0": {
-      "sha512": "TmWvKM2aF0nRo4HHqp0Wz6JgTYYVxCXudRKgHjB7UM96axg2viXOniAy+cm/3+XOuF3NJ1JpMiDYOxNbObN/zg==",
+    "Oracle.ManagedDataAccess.Core/23.6.1": {
+      "sha512": "Oc8AX7xme05xrp4/aCxKBH4+bpWgMCFafXI7LbLO/7OBMJLZRXhMtejDgIb8aYvIVyV7vSdAy3LkCYcJorxn1A==",
       "type": "package",
-      "path": "oracle.manageddataaccess.core/23.5.0",
+      "path": "oracle.manageddataaccess.core/23.6.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -8141,8 +8249,9 @@
         "PerfCounters/unregister_odpc_perfmon_counters.ps1",
         "README.md",
         "info.txt",
+        "lib/net8.0/Oracle.ManagedDataAccess.dll",
         "lib/netstandard2.1/Oracle.ManagedDataAccess.dll",
-        "oracle.manageddataaccess.core.23.5.0.nupkg.sha512",
+        "oracle.manageddataaccess.core.23.6.1.nupkg.sha512",
         "oracle.manageddataaccess.core.nuspec",
         "oracle.png"
       ]
@@ -9113,6 +9222,96 @@
         "ref/xamarinwatchos10/_._",
         "system.collections.nongeneric.4.3.0.nupkg.sha512",
         "system.collections.nongeneric.nuspec"
+      ]
+    },
+    "System.ComponentModel.Annotations/5.0.0": {
+      "sha512": "dMkqfy2el8A8/I76n2Hi1oBFEbG1SfxD2l5nhwXV3XjlnOmwxJlQbYpJH4W51odnU9sARCSAgv7S3CyAFMkpYg==",
+      "type": "package",
+      "path": "system.componentmodel.annotations/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net45/_._",
+        "lib/net461/System.ComponentModel.Annotations.dll",
+        "lib/netcore50/System.ComponentModel.Annotations.dll",
+        "lib/netstandard1.4/System.ComponentModel.Annotations.dll",
+        "lib/netstandard2.0/System.ComponentModel.Annotations.dll",
+        "lib/netstandard2.1/System.ComponentModel.Annotations.dll",
+        "lib/netstandard2.1/System.ComponentModel.Annotations.xml",
+        "lib/portable-net45+win8/_._",
+        "lib/win8/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/_._",
+        "ref/net461/System.ComponentModel.Annotations.dll",
+        "ref/net461/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/System.ComponentModel.Annotations.dll",
+        "ref/netcore50/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/de/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/es/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/fr/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/it/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/ja/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/ko/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/ru/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/zh-hans/System.ComponentModel.Annotations.xml",
+        "ref/netcore50/zh-hant/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/System.ComponentModel.Annotations.dll",
+        "ref/netstandard1.1/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/de/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/es/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/fr/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/it/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/ja/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/ko/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/ru/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/zh-hans/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.1/zh-hant/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/System.ComponentModel.Annotations.dll",
+        "ref/netstandard1.3/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/de/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/es/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/fr/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/it/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/ja/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/ko/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/ru/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/zh-hans/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.3/zh-hant/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/System.ComponentModel.Annotations.dll",
+        "ref/netstandard1.4/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/de/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/es/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/fr/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/it/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/ja/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/ko/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/ru/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/zh-hans/System.ComponentModel.Annotations.xml",
+        "ref/netstandard1.4/zh-hant/System.ComponentModel.Annotations.xml",
+        "ref/netstandard2.0/System.ComponentModel.Annotations.dll",
+        "ref/netstandard2.0/System.ComponentModel.Annotations.xml",
+        "ref/netstandard2.1/System.ComponentModel.Annotations.dll",
+        "ref/netstandard2.1/System.ComponentModel.Annotations.xml",
+        "ref/portable-net45+win8/_._",
+        "ref/win8/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.componentmodel.annotations.5.0.0.nupkg.sha512",
+        "system.componentmodel.annotations.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "System.Composition/6.0.0": {
@@ -13208,11 +13407,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.API.csproj",
+      "projectUniqueName": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.API.csproj",
       "projectName": "ProspEco.API",
-      "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.API.csproj",
+      "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.API.csproj",
       "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\obj\\",
+      "outputPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -13227,20 +13426,20 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Database\\ProspEco.Database.csproj": {
-              "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Database\\ProspEco.Database.csproj"
+            "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Database\\ProspEco.Database.csproj": {
+              "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Database\\ProspEco.Database.csproj"
             },
-            "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj": {
-              "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj"
+            "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj": {
+              "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj"
             },
-            "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Repository\\ProspEco.Repository.csproj": {
-              "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Repository\\ProspEco.Repository.csproj"
+            "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Repository\\ProspEco.Repository.csproj": {
+              "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Repository\\ProspEco.Repository.csproj"
             },
-            "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Service\\ProspEco.Service.csproj": {
-              "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Service\\ProspEco.Service.csproj"
+            "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Service\\ProspEco.Service.csproj": {
+              "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Service\\ProspEco.Service.csproj"
             },
-            "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Test\\ProspEco.Test.csproj": {
-              "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Test\\ProspEco.Test.csproj"
+            "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Test\\ProspEco.Test.csproj": {
+              "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Test\\ProspEco.Test.csproj"
             }
           }
         }

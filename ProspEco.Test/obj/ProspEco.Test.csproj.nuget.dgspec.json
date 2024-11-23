@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Test\\ProspEco.Test.csproj": {}
+    "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Test\\ProspEco.Test.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj": {
+    "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj",
         "projectName": "ProspEco.ML",
-        "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj",
+        "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.ML\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.ML\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -62,14 +62,14 @@
         }
       }
     },
-    "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Database\\ProspEco.Database.csproj": {
+    "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Database\\ProspEco.Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Database\\ProspEco.Database.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Database\\ProspEco.Database.csproj",
         "projectName": "ProspEco.Database",
-        "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Database\\ProspEco.Database.csproj",
+        "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Database\\ProspEco.Database.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Database\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Database\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -84,8 +84,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj": {
-                "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj"
+              "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj": {
+                "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj"
               }
             }
           }
@@ -105,6 +105,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.5.1, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.10, )"
@@ -123,7 +127,11 @@
             },
             "Oracle.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.23.50, )"
+              "version": "[8.23.60, )"
+            },
+            "Oracle.ManagedDataAccess.Core": {
+              "target": "Package",
+              "version": "[23.6.1, )"
             }
           },
           "imports": [
@@ -146,14 +154,14 @@
         }
       }
     },
-    "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj": {
+    "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj",
         "projectName": "ProspEco.Model",
-        "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj",
+        "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -210,14 +218,14 @@
         }
       }
     },
-    "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Repository\\ProspEco.Repository.csproj": {
+    "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Repository\\ProspEco.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Repository\\ProspEco.Repository.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Repository\\ProspEco.Repository.csproj",
         "projectName": "ProspEco.Repository",
-        "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Repository\\ProspEco.Repository.csproj",
+        "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Repository\\ProspEco.Repository.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Repository\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Repository\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -232,8 +240,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Database\\ProspEco.Database.csproj": {
-                "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Database\\ProspEco.Database.csproj"
+              "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Database\\ProspEco.Database.csproj": {
+                "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Database\\ProspEco.Database.csproj"
               }
             }
           }
@@ -282,14 +290,14 @@
         }
       }
     },
-    "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Service\\ProspEco.Service.csproj": {
+    "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Service\\ProspEco.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Service\\ProspEco.Service.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Service\\ProspEco.Service.csproj",
         "projectName": "ProspEco.Service",
-        "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Service\\ProspEco.Service.csproj",
+        "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Service\\ProspEco.Service.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Service\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Service\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -304,11 +312,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj": {
-                "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj"
+              "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj": {
+                "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj"
               },
-              "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Repository\\ProspEco.Repository.csproj": {
-                "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Repository\\ProspEco.Repository.csproj"
+              "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Repository\\ProspEco.Repository.csproj": {
+                "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Repository\\ProspEco.Repository.csproj"
               }
             }
           }
@@ -361,14 +369,14 @@
         }
       }
     },
-    "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Test\\ProspEco.Test.csproj": {
+    "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Test\\ProspEco.Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Test\\ProspEco.Test.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Test\\ProspEco.Test.csproj",
         "projectName": "ProspEco.Test",
-        "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Test\\ProspEco.Test.csproj",
+        "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Test\\ProspEco.Test.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Test\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Test\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -383,20 +391,20 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj": {
-                "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj"
+              "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj": {
+                "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj"
               },
-              "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Database\\ProspEco.Database.csproj": {
-                "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Database\\ProspEco.Database.csproj"
+              "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Database\\ProspEco.Database.csproj": {
+                "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Database\\ProspEco.Database.csproj"
               },
-              "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj": {
-                "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj"
+              "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj": {
+                "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj"
               },
-              "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Repository\\ProspEco.Repository.csproj": {
-                "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Repository\\ProspEco.Repository.csproj"
+              "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Repository\\ProspEco.Repository.csproj": {
+                "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Repository\\ProspEco.Repository.csproj"
               },
-              "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Service\\ProspEco.Service.csproj": {
-                "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Service\\ProspEco.Service.csproj"
+              "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Service\\ProspEco.Service.csproj": {
+                "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Service\\ProspEco.Service.csproj"
               }
             }
           }

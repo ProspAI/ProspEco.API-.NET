@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProspEco.API.Configuration;
 using ProspEco.API.Extensions;
+using ProspEco.Database;
 using ProspEco.Model.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,11 +14,9 @@ IConfiguration configuration = builder.Configuration;
 AppConfiguration appConfiguration = new AppConfiguration();
 configuration.Bind(appConfiguration);
 
-appConfiguration.ConnectionStrings = new ConnectionStrings
-{
-    OracleFIAP = configuration.GetSection("ConnectionStrings:OracleFIAP").Value,
-    DefaultConnection = configuration.GetSection("ConnectionStrings:DefaultConnection").Value
-};
+// Contexto do banco de dados
+builder.Services.AddDbContext<ProspEcoDbContext>(options =>
+    options.UseOracle(builder.Configuration.GetConnectionString("OracleFIAP")));
 
 
 // Registrar configurações e serviços no container de injeção de dependência

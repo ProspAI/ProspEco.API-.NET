@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj": {}
+    "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj": {
+    "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj",
         "projectName": "ProspEco.Model",
-        "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\ProspEco.Model.csproj",
+        "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\ProspEco.Model.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.Model\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.Model\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"

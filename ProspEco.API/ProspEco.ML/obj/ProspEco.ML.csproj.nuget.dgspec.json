@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj": {}
+    "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj": {
+    "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj",
         "projectName": "ProspEco.ML",
-        "projectPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj",
+        "projectPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.ML\\ProspEco.ML.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Downloads\\novo\\novo\\ProspEco.API\\ProspEco.ML\\obj\\",
+        "outputPath": "C:\\Users\\HP\\Downloads\\ProspEco.API-.NET\\ProspEco.API\\ProspEco.ML\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"
