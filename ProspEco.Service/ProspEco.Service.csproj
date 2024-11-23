@@ -17,4 +17,8 @@
     <ProjectReference Include="..\ProspEco.Repository\ProspEco.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Implementations\RecommendationService.cs" />
+  </ItemGroup>
+
 </Project>
