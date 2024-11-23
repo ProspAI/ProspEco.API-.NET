@@ -364,9 +364,6 @@ C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\appsetting
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\appsettings.json
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\ProspEco.Test.deps.json
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\ProspEco.Test.runtimeconfig.json
-C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\ProspEco.ML.deps.json
-C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\ProspEco.ML.runtimeconfig.json
-C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\ProspEco.ML.exe
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\ProspEco.API.exe
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\ProspEco.API.deps.json
 C:\Users\HP\Downloads\ProspEco.API-.NET\ProspEco.API\bin\Debug\net8.0\ProspEco.API.runtimeconfig.json
