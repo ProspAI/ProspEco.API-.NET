@@ -4,35 +4,46 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProspEco.Model.Entities
 {
-    [Table("metas")]
+    [Table("prospecco_metas")]
     public class Meta
     {
         [Key]
-        [Column("id")]
-        public long Id { get; set; }
+        [Column("id_meta", TypeName = "number(11)")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long IdMeta { get; set; }
 
         [Required]
-        [Column("atingida")]
-        public bool Atingida { get; set; }
+        [Column("fl_atingida", TypeName = "char(1)")]
+        public bool FlAtingida { get; set; }
 
         [Required]
-        [Column("consumo_alvo")]
-        public double ConsumoAlvo { get; set; }
+        [Column("vl_consumo_alvo", TypeName = "number(11,2)")]
+        public double VlConsumoAlvo { get; set; }
 
         [Required]
-        [Column("data_fim")]
-        public DateTime DataFim { get; set; }
+        [Column("dt_fim", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime DtFim { get; set; }
 
         [Required]
-        [Column("data_inicio")]
-        public DateTime DataInicio { get; set; }
+        [Column("dt_inicio", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime DtInicio { get; set; }
 
         [Required]
-        [Column("usuario_id")]
-        public long UsuarioId { get; set; }
+        [Column("id_usuario", TypeName = "number(11)")]
+        public long IdUsuario { get; set; }
 
-        // Relacionamentos
-        [ForeignKey("UsuarioId")]
+        // Relacionamento com Usuário
+        [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
+
+        [Column("dt_criacao", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime DtCriacao { get; set; }
+
+        [Column("dt_modificacao", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime? DtModificacao { get; set; }
     }
 }

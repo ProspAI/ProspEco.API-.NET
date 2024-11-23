@@ -1,129 +1,189 @@
-﻿// ProspEco.Tests/Services/ConquistaServiceTests.cs
-using Xunit;
+﻿using Xunit;
 using Moq;
-using AutoMapper;
-using ProspEco.Service.Implementations;
-using ProspEco.Repository.Interfaces;
+using ProspEco.Service;
+using ProspEco.Repository;
 using ProspEco.Model.Entities;
-using ProspEco.Model.DTOs;
-using System.Threading.Tasks;
+using ProspEco.Model.DTO.Request;
+using ProspEco.Model.DTO.Response;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProspEco.Tests.Services
 {
     public class ConquistaServiceTests
     {
-        private readonly Mock<IConquistaRepository> _conquistaRepositoryMock;
-        private readonly Mock<IMapper> _mapperMock;
+        private readonly Mock<IRepository<Conquista>> _conquistaRepositoryMock;
         private readonly ConquistaService _conquistaService;
 
         public ConquistaServiceTests()
         {
-            _conquistaRepositoryMock = new Mock<IConquistaRepository>();
-            _mapperMock = new Mock<IMapper>();
-            _conquistaService = new ConquistaService(_conquistaRepositoryMock.Object, _mapperMock.Object);
+            _conquistaRepositoryMock = new Mock<IRepository<Conquista>>();
+            _conquistaService = new ConquistaService(_conquistaRepositoryMock.Object);
         }
 
         [Fact]
-        public async Task GetConquistaByIdAsync_ReturnsConquistaDTO_WhenConquistaExists()
+        public async Task GetConquistaById_ReturnsResponse_WhenConquistaExists()
         {
             // Arrange
             var conquistaId = 1L;
-            var conquista = new Conquista { Id = conquistaId, Titulo = "Primeira Conquista", Descricao = "Descrição da primeira conquista", DataConquista = System.DateTime.UtcNow, UsuarioId = 1L };
-            var conquistaDTO = new ConquistaDTO { Id = conquistaId, Titulo = "Primeira Conquista", Descricao = "Descrição da primeira conquista", DataConquista = conquista.DataConquista, UsuarioId = 1L };
+            var conquista = new Conquista
+            {
+                IdConquista = conquistaId,
+                DsTitulo = "Economia de Energia",
+                DsDescricao = "Primeira meta atingida",
+                DtConquista = new DateTime(2023, 01, 01),
+                IdUsuario = 1,
+                DtCriacao = DateTime.UtcNow
+            };
 
             _conquistaRepositoryMock.Setup(repo => repo.GetByIdAsync(conquistaId)).ReturnsAsync(conquista);
-            _mapperMock.Setup(m => m.Map<ConquistaDTO>(conquista)).Returns(conquistaDTO);
 
             // Act
-            var result = await _conquistaService.GetConquistaByIdAsync(conquistaId);
+            var result = await _conquistaService.GetConquistaById(conquistaId);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(conquistaId, result.Id);
-            Assert.Equal("Primeira Conquista", result.Titulo);
+            Assert.Equal(conquistaId, result.IdConquista);
+            Assert.Equal("Economia de Energia", result.Titulo);
         }
 
         [Fact]
-        public async Task GetConquistaByIdAsync_ReturnsNull_WhenConquistaDoesNotExist()
+        public async Task GetConquistaById_ThrowsException_WhenConquistaDoesNotExist()
         {
             // Arrange
             var conquistaId = 1L;
             _conquistaRepositoryMock.Setup(repo => repo.GetByIdAsync(conquistaId)).ReturnsAsync((Conquista)null);
-            _mapperMock.Setup(m => m.Map<ConquistaDTO>(It.IsAny<Conquista>())).Returns((ConquistaDTO)null);
 
-            // Act
-            var result = await _conquistaService.GetConquistaByIdAsync(conquistaId);
-
-            // Assert
-            Assert.Null(result);
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _conquistaService.GetConquistaById(conquistaId));
+            Assert.Equal("Conquista não encontrada.", exception.Message);
         }
 
         [Fact]
-        public async Task CreateConquistaAsync_AddsConquistaAndReturnsConquistaDTO()
+        public async Task GetAllConquistas_ReturnsAllConquistas()
         {
             // Arrange
-            var conquistaDTO = new ConquistaDTO { Titulo = "Nova Conquista", Descricao = "Descrição da nova conquista", DataConquista = System.DateTime.UtcNow, UsuarioId = 1L };
-            var conquista = new Conquista { Titulo = "Nova Conquista", Descricao = "Descrição da nova conquista", DataConquista = conquistaDTO.DataConquista, UsuarioId = 1L };
-            var conquistaDTOResult = new ConquistaDTO { Id = 2L, Titulo = "Nova Conquista", Descricao = "Descrição da nova conquista", DataConquista = conquista.DataConquista, UsuarioId = 1L };
+            var conquistas = new List<Conquista>
+            {
+                new Conquista { IdConquista = 1, DsTitulo = "Economia de Energia", DsDescricao = "Primeira meta atingida", IdUsuario = 1 },
+                new Conquista { IdConquista = 2, DsTitulo = "Sustentabilidade", DsDescricao = "Economia de 50 kWh", IdUsuario = 1 }
+            };
 
-            _mapperMock.Setup(m => m.Map<Conquista>(conquistaDTO)).Returns(conquista);
-            _conquistaRepositoryMock.Setup(repo => repo.AddAsync(conquista)).Returns(Task.CompletedTask);
-            _mapperMock.Setup(m => m.Map<ConquistaDTO>(conquista)).Returns(conquistaDTOResult);
+            _conquistaRepositoryMock.Setup(repo => repo.GetAllAsync()).ReturnsAsync(conquistas);
 
             // Act
-            var result = await _conquistaService.CreateConquistaAsync(conquistaDTO);
+            var result = await _conquistaService.GetAllConquistas();
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(2L, result.Id);
-            Assert.Equal("Nova Conquista", result.Titulo);
+            Assert.Equal(2, result.Count());
+            Assert.Contains(result, r => r.Titulo == "Economia de Energia");
+            Assert.Contains(result, r => r.Titulo == "Sustentabilidade");
         }
 
         [Fact]
-        public async Task UpdateConquistaAsync_UpdatesExistingConquista()
+        public async Task AddConquista_CreatesConquistaSuccessfully()
+        {
+            // Arrange
+            var conquistaRequest = new ConquistaRequest
+            {
+                DataConquista = new DateTime(2023, 01, 01),
+                Descricao = "Primeira meta atingida",
+                Titulo = "Economia de Energia",
+                UsuarioId = 1
+            };
+
+            _conquistaRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Conquista>())).Returns(Task.CompletedTask);
+
+            // Act
+            await _conquistaService.AddConquista(conquistaRequest);
+
+            // Assert
+            _conquistaRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Conquista>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task UpdateConquista_UpdatesExistingConquistaSuccessfully()
         {
             // Arrange
             var conquistaId = 1L;
-            var conquistaDTO = new ConquistaDTO { Id = conquistaId, Titulo = "Conquista Atualizada", Descricao = "Descrição atualizada", DataConquista = System.DateTime.UtcNow.AddDays(-1), UsuarioId = 1L };
-            var conquistaExistente = new Conquista { Id = conquistaId, Titulo = "Conquista Antiga", Descricao = "Descrição antiga", DataConquista = System.DateTime.UtcNow, UsuarioId = 1L };
+            var conquistaRequest = new ConquistaRequest
+            {
+                DataConquista = new DateTime(2023, 01, 01),
+                Descricao = "Atualizado para economia de 50 kWh",
+                Titulo = "Economia Atualizada",
+                UsuarioId = 1
+            };
+
+            var conquistaExistente = new Conquista
+            {
+                IdConquista = conquistaId,
+                DsTitulo = "Economia de Energia",
+                DsDescricao = "Primeira meta atingida",
+                DtConquista = new DateTime(2023, 01, 01),
+                IdUsuario = 1
+            };
 
             _conquistaRepositoryMock.Setup(repo => repo.GetByIdAsync(conquistaId)).ReturnsAsync(conquistaExistente);
-            _mapperMock.Setup(m => m.Map(conquistaDTO, conquistaExistente)).Callback<ConquistaDTO, Conquista>((dto, entity) =>
-            {
-                entity.Titulo = dto.Titulo;
-                entity.Descricao = dto.Descricao;
-                entity.DataConquista = dto.DataConquista;
-                entity.UsuarioId = dto.UsuarioId;
-            });
-            _conquistaRepositoryMock.Setup(repo => repo.UpdateAsync(conquistaExistente)).Returns(Task.CompletedTask);
 
             // Act
-            await _conquistaService.UpdateConquistaAsync(conquistaId, conquistaDTO);
+            await _conquistaService.UpdateConquista(conquistaId, conquistaRequest);
 
             // Assert
-            _mapperMock.Verify(m => m.Map(conquistaDTO, conquistaExistente), Times.Once);
-            _conquistaRepositoryMock.Verify(repo => repo.UpdateAsync(conquistaExistente), Times.Once);
-            Assert.Equal("Conquista Atualizada", conquistaExistente.Titulo);
-            Assert.Equal("Descrição atualizada", conquistaExistente.Descricao);
+            _conquistaRepositoryMock.Verify(repo => repo.UpdateAsync(conquistaId, It.IsAny<Conquista>()), Times.Once);
+            Assert.Equal("Economia Atualizada", conquistaExistente.DsTitulo);
+            Assert.Equal("Atualizado para economia de 50 kWh", conquistaExistente.DsDescricao);
         }
 
         [Fact]
-        public async Task UpdateConquistaAsync_DoesNothing_WhenConquistaDoesNotExist()
+        public async Task UpdateConquista_ThrowsException_WhenConquistaDoesNotExist()
         {
             // Arrange
             var conquistaId = 1L;
-            var conquistaDTO = new ConquistaDTO { Id = conquistaId, Titulo = "Conquista Atualizada", Descricao = "Descrição atualizada", DataConquista = System.DateTime.UtcNow.AddDays(-1), UsuarioId = 1L };
+            var conquistaRequest = new ConquistaRequest
+            {
+                DataConquista = new DateTime(2023, 01, 01),
+                Descricao = "Atualizado",
+                Titulo = "Atualizado",
+                UsuarioId = 1
+            };
 
             _conquistaRepositoryMock.Setup(repo => repo.GetByIdAsync(conquistaId)).ReturnsAsync((Conquista)null);
-            _mapperMock.Setup(m => m.Map<ConquistaDTO, Conquista>(conquistaDTO, It.IsAny<Conquista>())).Verifiable();
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _conquistaService.UpdateConquista(conquistaId, conquistaRequest));
+            Assert.Equal("Conquista não encontrada.", exception.Message);
+        }
+
+        [Fact]
+        public async Task DeleteConquista_DeletesConquistaSuccessfully()
+        {
+            // Arrange
+            var conquistaId = 1L;
+            var conquistaExistente = new Conquista { IdConquista = conquistaId };
+
+            _conquistaRepositoryMock.Setup(repo => repo.GetByIdAsync(conquistaId)).ReturnsAsync(conquistaExistente);
+            _conquistaRepositoryMock.Setup(repo => repo.DeleteAsync(conquistaId)).Returns(Task.CompletedTask);
 
             // Act
-            await _conquistaService.UpdateConquistaAsync(conquistaId, conquistaDTO);
+            await _conquistaService.DeleteConquista(conquistaId);
 
             // Assert
-            _mapperMock.Verify(m => m.Map<ConquistaDTO, Conquista>(conquistaDTO, It.IsAny<Conquista>()), Times.Never);
-            _conquistaRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Conquista>()), Times.Never);
+            _conquistaRepositoryMock.Verify(repo => repo.DeleteAsync(conquistaId), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteConquista_ThrowsException_WhenConquistaDoesNotExist()
+        {
+            // Arrange
+            var conquistaId = 1L;
+            _conquistaRepositoryMock.Setup(repo => repo.GetByIdAsync(conquistaId)).ReturnsAsync((Conquista)null);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _conquistaService.DeleteConquista(conquistaId));
+            Assert.Equal("Conquista não encontrada.", exception.Message);
         }
     }
 }

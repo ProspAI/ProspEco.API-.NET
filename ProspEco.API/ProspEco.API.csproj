@@ -16,6 +16,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
     <PackageReference Include="Middleware" Version="5.6.1" />
     <PackageReference Include="MiddlewareBuilder" Version="10.2.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
@@ -34,6 +35,7 @@
 
   <ItemGroup>
     <Compile Remove="ProspEco.ML\**" />
+    <Compile Remove="Configuration\AutoMapperProfile.cs" />
   </ItemGroup>
 
   <ItemGroup>

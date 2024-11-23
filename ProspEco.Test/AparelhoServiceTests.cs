@@ -1,128 +1,167 @@
-﻿// ProspEco.Tests/Services/AparelhoServiceTests.cs
-using Xunit;
-using Moq;
-using AutoMapper;
-using ProspEco.Service.Implementations;
-using ProspEco.Repository.Interfaces;
+﻿using Moq;
+using ProspEco.Model.DTO.Request;
 using ProspEco.Model.Entities;
-using ProspEco.Model.DTOs;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using ProspEco.Repository;
+using ProspEco.Service;
 
-namespace ProspEco.Tests.Services
+namespace ProspEco.Test
 {
     public class AparelhoServiceTests
     {
-        private readonly Mock<IAparelhoRepository> _aparelhoRepositoryMock;
-        private readonly Mock<IMapper> _mapperMock;
+        private readonly Mock<IRepository<Aparelho>> _aparelhoRepositoryMock;
         private readonly AparelhoService _aparelhoService;
 
         public AparelhoServiceTests()
         {
-            _aparelhoRepositoryMock = new Mock<IAparelhoRepository>();
-            _mapperMock = new Mock<IMapper>();
-            _aparelhoService = new AparelhoService(_aparelhoRepositoryMock.Object, _mapperMock.Object);
+            _aparelhoRepositoryMock = new Mock<IRepository<Aparelho>>();
+            _aparelhoService = new AparelhoService(_aparelhoRepositoryMock.Object);
         }
 
         [Fact]
-        public async Task GetAparelhoByIdAsync_ReturnsAparelhoDTO_WhenAparelhoExists()
+        public async Task GetAparelhoById_ReturnsAparelhoResponse_WhenAparelhoExists()
         {
             // Arrange
             var aparelhoId = 1L;
-            var aparelho = new Aparelho { Id = aparelhoId, Nome = "Lâmpada", Tipo = "Iluminação", Potencia = 60, UsuarioId = 1 };
-            var aparelhoDTO = new AparelhoDTO { Id = aparelhoId, Nome = "Lâmpada", Tipo = "Iluminação", Potencia = 60, UsuarioId = 1 };
+            var aparelho = new Aparelho
+            {
+                IdAparelho = aparelhoId,
+                DsNome = "Lâmpada",
+                DsTipo = "Iluminação",
+                VlPotencia = 60,
+                IdUsuario = 1,
+                DtCriacao = DateTime.UtcNow
+            };
 
             _aparelhoRepositoryMock.Setup(repo => repo.GetByIdAsync(aparelhoId)).ReturnsAsync(aparelho);
-            _mapperMock.Setup(m => m.Map<AparelhoDTO>(aparelho)).Returns(aparelhoDTO);
 
             // Act
-            var result = await _aparelhoService.GetAparelhoByIdAsync(aparelhoId);
+            var result = await _aparelhoService.GetAparelhoById(aparelhoId);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(aparelhoId, result.Id);
+            Assert.Equal(aparelhoId, result.IdAparelho);
             Assert.Equal("Lâmpada", result.Nome);
         }
 
         [Fact]
-        public async Task GetAparelhoByIdAsync_ReturnsNull_WhenAparelhoDoesNotExist()
+        public async Task GetAparelhoById_ThrowsException_WhenAparelhoDoesNotExist()
         {
             // Arrange
             var aparelhoId = 1L;
             _aparelhoRepositoryMock.Setup(repo => repo.GetByIdAsync(aparelhoId)).ReturnsAsync((Aparelho)null);
-            _mapperMock.Setup(m => m.Map<AparelhoDTO>(It.IsAny<Aparelho>())).Returns((AparelhoDTO)null);
 
-            // Act
-            var result = await _aparelhoService.GetAparelhoByIdAsync(aparelhoId);
-
-            // Assert
-            Assert.Null(result);
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _aparelhoService.GetAparelhoById(aparelhoId));
+            Assert.Equal("Aparelho não encontrado.", exception.Message);
         }
 
         [Fact]
-        public async Task CreateAparelhoAsync_AddsAparelhoAndReturnsAparelhoDTO()
+        public async Task AddAparelho_CreatesAparelhoSuccessfully()
         {
             // Arrange
-            var aparelhoDTO = new AparelhoDTO { Nome = "Ventilador", Tipo = "Climatização", Potencia = 75, UsuarioId = 1 };
-            var aparelho = new Aparelho { Nome = "Ventilador", Tipo = "Climatização", Potencia = 75, UsuarioId = 1 };
-            var aparelhoDTOResult = new AparelhoDTO { Id = 2L, Nome = "Ventilador", Tipo = "Climatização", Potencia = 75, UsuarioId = 1 };
+            var aparelhoRequest = new AparelhoRequest
+            {
+                Nome = "Ventilador",
+                Tipo = "Climatização",
+                Potencia = 75,
+                UsuarioId = 1
+            };
 
-            _mapperMock.Setup(m => m.Map<Aparelho>(aparelhoDTO)).Returns(aparelho);
-            _aparelhoRepositoryMock.Setup(repo => repo.AddAsync(aparelho)).Returns(Task.CompletedTask);
-            _mapperMock.Setup(m => m.Map<AparelhoDTO>(aparelho)).Returns(aparelhoDTOResult);
+            _aparelhoRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Aparelho>())).Returns(Task.CompletedTask);
 
             // Act
-            var result = await _aparelhoService.CreateAparelhoAsync(aparelhoDTO);
+            await _aparelhoService.AddAparelho(aparelhoRequest);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(2L, result.Id);
-            Assert.Equal("Ventilador", result.Nome);
+            _aparelhoRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Aparelho>()), Times.Once);
         }
 
         [Fact]
-        public async Task UpdateAparelhoAsync_UpdatesExistingAparelho()
+        public async Task UpdateAparelho_UpdatesExistingAparelhoSuccessfully()
         {
             // Arrange
             var aparelhoId = 1L;
-            var aparelhoDTO = new AparelhoDTO { Id = aparelhoId, Nome = "Ar Condicionado", Tipo = "Climatização", Potencia = 120, UsuarioId = 1 };
-            var aparelhoExistente = new Aparelho { Id = aparelhoId, Nome = "Ventilador", Tipo = "Climatização", Potencia = 75, UsuarioId = 1 };
+            var aparelhoRequest = new AparelhoRequest
+            {
+                Nome = "Ar Condicionado",
+                Tipo = "Climatização",
+                Potencia = 120,
+                UsuarioId = 1
+            };
+
+            var aparelhoExistente = new Aparelho
+            {
+                IdAparelho = aparelhoId,
+                DsNome = "Ventilador",
+                DsTipo = "Climatização",
+                VlPotencia = 75,
+                IdUsuario = 1,
+                DtCriacao = DateTime.UtcNow
+            };
 
             _aparelhoRepositoryMock.Setup(repo => repo.GetByIdAsync(aparelhoId)).ReturnsAsync(aparelhoExistente);
-            _mapperMock.Setup(m => m.Map(aparelhoDTO, aparelhoExistente)).Callback<AparelhoDTO, Aparelho>((dto, entity) =>
-            {
-                entity.Nome = dto.Nome;
-                entity.Tipo = dto.Tipo;
-                entity.Potencia = dto.Potencia;
-                entity.UsuarioId = dto.UsuarioId;
-            });
-            _aparelhoRepositoryMock.Setup(repo => repo.UpdateAsync(aparelhoExistente)).Returns(Task.CompletedTask);
 
             // Act
-            await _aparelhoService.UpdateAparelhoAsync(aparelhoId, aparelhoDTO);
+            await _aparelhoService.UpdateAparelho(aparelhoId, aparelhoRequest);
 
             // Assert
-            _mapperMock.Verify(m => m.Map(aparelhoDTO, aparelhoExistente), Times.Once);
-            _aparelhoRepositoryMock.Verify(repo => repo.UpdateAsync(aparelhoExistente), Times.Once);
-            Assert.Equal("Ar Condicionado", aparelhoExistente.Nome);
-            Assert.Equal("Climatização", aparelhoExistente.Tipo);
-            Assert.Equal(120, aparelhoExistente.Potencia);
+            _aparelhoRepositoryMock.Verify(repo => repo.UpdateAsync(aparelhoId, It.IsAny<Aparelho>()), Times.Once);
+            Assert.Equal("Ar Condicionado", aparelhoExistente.DsNome);
+            Assert.Equal("Climatização", aparelhoExistente.DsTipo);
+            Assert.Equal(120, aparelhoExistente.VlPotencia);
         }
 
         [Fact]
-        public async Task DeleteAparelhoAsync_CallsDeleteAsync()
+        public async Task UpdateAparelho_ThrowsException_WhenAparelhoDoesNotExist()
         {
             // Arrange
             var aparelhoId = 1L;
+            var aparelhoRequest = new AparelhoRequest
+            {
+                Nome = "Ar Condicionado",
+                Tipo = "Climatização",
+                Potencia = 120,
+                UsuarioId = 1
+            };
+
+            _aparelhoRepositoryMock.Setup(repo => repo.GetByIdAsync(aparelhoId)).ReturnsAsync((Aparelho)null);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _aparelhoService.UpdateAparelho(aparelhoId, aparelhoRequest));
+            Assert.Equal("Aparelho não encontrado.", exception.Message);
+        }
+
+        [Fact]
+        public async Task DeleteAparelho_CallsDeleteAsync()
+        {
+            // Arrange
+            var aparelhoId = 1L;
+            var aparelhoExistente = new Aparelho
+            {
+                IdAparelho = aparelhoId,
+                DsNome = "Ventilador"
+            };
+
+            _aparelhoRepositoryMock.Setup(repo => repo.GetByIdAsync(aparelhoId)).ReturnsAsync(aparelhoExistente);
             _aparelhoRepositoryMock.Setup(repo => repo.DeleteAsync(aparelhoId)).Returns(Task.CompletedTask);
 
             // Act
-            await _aparelhoService.DeleteAparelhoAsync(aparelhoId);
+            await _aparelhoService.DeleteAparelho(aparelhoId);
 
             // Assert
             _aparelhoRepositoryMock.Verify(repo => repo.DeleteAsync(aparelhoId), Times.Once);
         }
 
-        // Adicione mais testes para outros métodos e cenários conforme necessário
+        [Fact]
+        public async Task DeleteAparelho_ThrowsException_WhenAparelhoDoesNotExist()
+        {
+            // Arrange
+            var aparelhoId = 1L;
+            _aparelhoRepositoryMock.Setup(repo => repo.GetByIdAsync(aparelhoId)).ReturnsAsync((Aparelho)null);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _aparelhoService.DeleteAparelho(aparelhoId));
+            Assert.Equal("Aparelho não encontrado.", exception.Message);
+        }
     }
 }

@@ -4,27 +4,37 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProspEco.Model.Entities
 {
-    [Table("registros_consumo")]
+    [Table("prospecco_registros_consumo")]
     public class RegistroConsumo
     {
         [Key]
-        [Column("id")]
-        public long Id { get; set; }
+        [Column("id_registro", TypeName = "number(11)")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long IdRegistro { get; set; }
 
         [Required]
-        [Column("consumo")]
-        public double Consumo { get; set; }
+        [Column("vl_consumo", TypeName = "number(11,2)")]
+        public double VlConsumo { get; set; }
 
         [Required]
-        [Column("data_hora")]
-        public DateTime DataHora { get; set; }
+        [Column("dt_hora", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime DtHora { get; set; }
 
         [Required]
-        [Column("aparelho_id")]
-        public long AparelhoId { get; set; }
+        [Column("id_aparelho", TypeName = "number(11)")]
+        public long IdAparelho { get; set; }
 
-        // Relacionamentos
-        [ForeignKey("AparelhoId")]
+        // Relacionamento com Aparelho
+        [ForeignKey("IdAparelho")]
         public Aparelho Aparelho { get; set; }
+
+        [Column("dt_criacao", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime DtCriacao { get; set; }
+
+        [Column("dt_modificacao", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime? DtModificacao { get; set; }
     }
 }

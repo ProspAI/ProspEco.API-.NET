@@ -1,85 +1,99 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProspEco.Model.DTOs;
-using ProspEco.Service.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using ProspEco.Model.DTO.Request;
+using ProspEco.Model.DTO.Response;
+using ProspEco.Service;
 
-namespace ProspEco.API.Controllers
+namespace ProspEco.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class NotificacoesController : ControllerBase
+    public class NotificacaoController : ControllerBase
     {
         private readonly INotificacaoService _notificacaoService;
 
-        public NotificacoesController(INotificacaoService notificacaoService)
+        public NotificacaoController(INotificacaoService notificacaoService)
         {
             _notificacaoService = notificacaoService;
         }
 
-        // GET: api/Notificacoes
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<NotificacaoDTO>>> GetNotificacoes()
-        {
-            var notificacoes = await _notificacaoService.GetAllNotificacoesAsync();
-            return Ok(notificacoes);
-        }
-
-        // GET: api/Notificacoes/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<NotificacaoDTO>> GetNotificacao(long id)
-        {
-            var notificacao = await _notificacaoService.GetNotificacaoByIdAsync(id);
-            if (notificacao == null)
-            {
-                return NotFound(new { message = $"Notificação com ID {id} não encontrada." });
-            }
-            return Ok(notificacao);
-        }
-
-        // GET: api/Notificacoes/usuario/1
-        [HttpGet("usuario/{usuarioId}")]
-        public async Task<ActionResult<IEnumerable<NotificacaoDTO>>> GetNotificacoesByUsuarioId(long usuarioId)
-        {
-            var notificacoes = await _notificacaoService.GetNotificacoesByUsuarioIdAsync(usuarioId);
-            return Ok(notificacoes);
-        }
-
-        // GET: api/Notificacoes/unread/1
-        [HttpGet("unread/{usuarioId}")]
-        public async Task<ActionResult<IEnumerable<NotificacaoDTO>>> GetUnreadNotificacoes(long usuarioId)
-        {
-            var notificacoes = await _notificacaoService.GetUnreadNotificacoesAsync(usuarioId);
-            return Ok(notificacoes);
-        }
-
-        // POST: api/Notificacoes
         [HttpPost]
-        public async Task<ActionResult<NotificacaoDTO>> CreateNotificacao(NotificacaoDTO notificacaoDTO)
+        public async Task<IActionResult> AddNotificacao([FromBody] NotificacaoRequest notificacaoRequest)
         {
-            var novaNotificacao = await _notificacaoService.CreateNotificacaoAsync(notificacaoDTO);
-            return CreatedAtAction(nameof(GetNotificacao), new { id = novaNotificacao.Id }, novaNotificacao);
-        }
-
-        // PUT: api/Notificacoes/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateNotificacao(long id, NotificacaoDTO notificacaoDTO)
-        {
-            if (id != notificacaoDTO.Id)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "ID da notificação na URL não corresponde ao ID no corpo da requisição." });
+                return BadRequest(ModelState);
             }
 
-            await _notificacaoService.UpdateNotificacaoAsync(id, notificacaoDTO);
-            return NoContent();
+            try
+            {
+                await _notificacaoService.AddNotificacao(notificacaoRequest);
+                return Created("", "Notificação criada com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao criar notificação: {ex.Message}");
+            }
         }
 
-        // DELETE: api/Notificacoes/5
-        [HttpDelete("{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllNotificacoes()
+        {
+            try
+            {
+                var notificacoes = await _notificacaoService.GetAllNotificacoes();
+                return Ok(notificacoes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao buscar notificações: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{id:long}")]
+        public async Task<IActionResult> GetNotificacaoById(long id)
+        {
+            try
+            {
+                var notificacao = await _notificacaoService.GetNotificacaoById(id);
+                return Ok(notificacao);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpPut("{id:long}")]
+        public async Task<IActionResult> UpdateNotificacao(long id, [FromBody] NotificacaoRequest notificacaoRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _notificacaoService.UpdateNotificacao(id, notificacaoRequest);
+                return NoContent(); // Atualização bem-sucedida
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao atualizar notificação: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{id:long}")]
         public async Task<IActionResult> DeleteNotificacao(long id)
         {
-            await _notificacaoService.DeleteNotificacaoAsync(id);
-            return NoContent();
+            try
+            {
+                await _notificacaoService.DeleteNotificacao(id);
+                return NoContent(); // Exclusão bem-sucedida
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }

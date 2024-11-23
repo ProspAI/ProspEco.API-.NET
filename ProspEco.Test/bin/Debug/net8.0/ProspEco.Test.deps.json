@@ -790,10 +790,10 @@
           }
         }
       },
-      "Oracle.EntityFrameworkCore/8.23.60": {
+      "Oracle.EntityFrameworkCore/8.23.50": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Relational": "8.0.10",
-          "Oracle.ManagedDataAccess.Core": "23.6.0"
+          "Oracle.ManagedDataAccess.Core": "23.5.0"
         },
         "runtime": {
           "lib/net8.0/Oracle.EntityFrameworkCore.dll": {
@@ -810,15 +810,14 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         }
       },
-      "Oracle.ManagedDataAccess.Core/23.6.0": {
+      "Oracle.ManagedDataAccess.Core/23.5.0": {
         "dependencies": {
           "System.Diagnostics.PerformanceCounter": "8.0.0",
           "System.DirectoryServices.Protocols": "8.0.0",
-          "System.Formats.Asn1": "8.0.1",
           "System.Security.Cryptography.Pkcs": "8.0.0"
         },
         "runtime": {
-          "lib/net8.0/Oracle.ManagedDataAccess.dll": {
+          "lib/netstandard2.1/Oracle.ManagedDataAccess.dll": {
             "assemblyVersion": "23.1.0.0",
             "fileVersion": "23.1.0.0"
           }
@@ -872,14 +871,6 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
-      "Serilog/4.2.0-dev-02328": {
-        "runtime": {
-          "lib/net8.0/Serilog.dll": {
-            "assemblyVersion": "4.2.0.0",
-            "fileVersion": "4.2.0.0"
-          }
-        }
-      },
       "System.AppContext/4.3.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
@@ -1622,11 +1613,9 @@
       "xunit.runner.visualstudio/2.5.3": {},
       "ProspEco.Database/1.0.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.10",
           "Microsoft.EntityFrameworkCore": "8.0.10",
-          "Oracle.EntityFrameworkCore": "8.23.60",
-          "ProspEco.Model": "1.0.0",
-          "Serilog": "4.2.0-dev-02328"
+          "Oracle.EntityFrameworkCore": "8.23.50",
+          "ProspEco.Model": "1.0.0"
         },
         "runtime": {
           "ProspEco.Database.dll": {
@@ -1942,12 +1931,12 @@
       "path": "nuget.frameworks/6.5.0",
       "hashPath": "nuget.frameworks.6.5.0.nupkg.sha512"
     },
-    "Oracle.EntityFrameworkCore/8.23.60": {
+    "Oracle.EntityFrameworkCore/8.23.50": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+qjaELz10imrQgR84D5ypq32UJO6M9/VC77ko1EuHyhVp53HidPaPX3h3/s2V87lVg4E29p5e2ZP77oGmhYzNA==",
-      "path": "oracle.entityframeworkcore/8.23.60",
-      "hashPath": "oracle.entityframeworkcore.8.23.60.nupkg.sha512"
+      "sha512": "sha512-tFL1ErU4/QXSIJdiSu8q3//lEwe1QoiUH3RaioI0MX/Hdx3Waj5xxq3mlgQ/nzVP+0CKTDVXxZloVArRzBJQtA==",
+      "path": "oracle.entityframeworkcore/8.23.50",
+      "hashPath": "oracle.entityframeworkcore.8.23.50.nupkg.sha512"
     },
     "Oracle.ManagedDataAccess/23.6.1": {
       "type": "package",
@@ -1956,12 +1945,12 @@
       "path": "oracle.manageddataaccess/23.6.1",
       "hashPath": "oracle.manageddataaccess.23.6.1.nupkg.sha512"
     },
-    "Oracle.ManagedDataAccess.Core/23.6.0": {
+    "Oracle.ManagedDataAccess.Core/23.5.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-dh9lSGv6DUU7e92HULZOFYdpRQuIPy6B4dlN5zT3eyhRU9lsVbu8CYdyB7yLAdPNx4Egpq75uP2Qcr98PhTbmg==",
-      "path": "oracle.manageddataaccess.core/23.6.0",
-      "hashPath": "oracle.manageddataaccess.core.23.6.0.nupkg.sha512"
+      "sha512": "sha512-TmWvKM2aF0nRo4HHqp0Wz6JgTYYVxCXudRKgHjB7UM96axg2viXOniAy+cm/3+XOuF3NJ1JpMiDYOxNbObN/zg==",
+      "path": "oracle.manageddataaccess.core/23.5.0",
+      "hashPath": "oracle.manageddataaccess.core.23.5.0.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
       "type": "package",
@@ -2074,13 +2063,6 @@
       "sha512": "sha512-VB5cn/7OzUfzdnC8tqAIMQciVLiq2epm2NrAm1E9OjNRyG4lVhfR61SMcLizejzQP8R8Uf/0l5qOIbUEi+RdEg==",
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.0",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512"
-    },
-    "Serilog/4.2.0-dev-02328": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Mur7I61Dt82hRdTPR4ykaU9rVuG5wCIKCfCi+UtVTaubUb69fFp1q4iA3bUOFk6RI2ae+72yt+6HHarh6XZ2Pw==",
-      "path": "serilog/4.2.0-dev-02328",
-      "hashPath": "serilog.4.2.0-dev-02328.nupkg.sha512"
     },
     "System.AppContext/4.3.0": {
       "type": "package",

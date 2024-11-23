@@ -1,90 +1,99 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProspEco.Model.DTOs;
-using ProspEco.Service.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using ProspEco.Model.DTO.Request;
+using ProspEco.Model.DTO.Response;
+using ProspEco.Service;
 
-namespace ProspEco.API.Controllers
+namespace ProspEco.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BandeirasTarifariasController : ControllerBase
+    public class BandeiraTarifariaController : ControllerBase
     {
-        private readonly IBandeiraTarifariaService _bandeiraService;
+        private readonly IBandeiraTarifariaService _bandeiraTarifariaService;
 
-        public BandeirasTarifariasController(IBandeiraTarifariaService bandeiraService)
+        public BandeiraTarifariaController(IBandeiraTarifariaService bandeiraTarifariaService)
         {
-            _bandeiraService = bandeiraService;
+            _bandeiraTarifariaService = bandeiraTarifariaService;
         }
 
-        // GET: api/BandeirasTarifarias
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<BandeiraTarifariaDTO>>> GetBandeirasTarifarias()
-        {
-            var bandeiras = await _bandeiraService.GetAllBandeirasTarifariasAsync();
-            return Ok(bandeiras);
-        }
-
-        // GET: api/BandeirasTarifarias/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<BandeiraTarifariaDTO>> GetBandeiraTarifaria(long id)
-        {
-            var bandeira = await _bandeiraService.GetBandeiraTarifariaByIdAsync(id);
-            if (bandeira == null)
-            {
-                return NotFound(new { message = $"Bandeira tarifária com ID {id} não encontrada." });
-            }
-            return Ok(bandeira);
-        }
-
-        // GET: api/BandeirasTarifarias/data-vigencia/2023-12-31
-        [HttpGet("data-vigencia/{dataVigencia}")]
-        public async Task<ActionResult<IEnumerable<BandeiraTarifariaDTO>>> GetBandeirasByDataVigencia(DateTime dataVigencia)
-        {
-            var bandeiras = await _bandeiraService.GetBandeirasByDataVigenciaAsync(dataVigencia);
-            return Ok(bandeiras);
-        }
-
-        // GET: api/BandeirasTarifarias/latest
-        [HttpGet("latest")]
-        public async Task<ActionResult<BandeiraTarifariaDTO>> GetLatestBandeiraTarifaria()
-        {
-            var bandeira = await _bandeiraService.GetLatestBandeiraTarifariaAsync();
-            if (bandeira == null)
-            {
-                return NotFound(new { message = "Nenhuma bandeira tarifária encontrada." });
-            }
-            return Ok(bandeira);
-        }
-
-        // POST: api/BandeirasTarifarias
         [HttpPost]
-        public async Task<ActionResult<BandeiraTarifariaDTO>> CreateBandeiraTarifaria(BandeiraTarifariaDTO bandeiraDTO)
+        public async Task<IActionResult> AddBandeiraTarifaria([FromBody] BandeiraTarifariaRequest bandeiraRequest)
         {
-            var novaBandeira = await _bandeiraService.CreateBandeiraTarifariaAsync(bandeiraDTO);
-            return CreatedAtAction(nameof(GetBandeiraTarifaria), new { id = novaBandeira.Id }, novaBandeira);
-        }
-
-        // PUT: api/BandeirasTarifarias/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBandeiraTarifaria(long id, BandeiraTarifariaDTO bandeiraDTO)
-        {
-            if (id != bandeiraDTO.Id)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "ID da bandeira tarifária na URL não corresponde ao ID no corpo da requisição." });
+                return BadRequest(ModelState);
             }
 
-            await _bandeiraService.UpdateBandeiraTarifariaAsync(id, bandeiraDTO);
-            return NoContent();
+            try
+            {
+                await _bandeiraTarifariaService.AddBandeiraTarifaria(bandeiraRequest);
+                return Created("", "Bandeira tarifária criada com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao criar bandeira tarifária: {ex.Message}");
+            }
         }
 
-        // DELETE: api/BandeirasTarifarias/5
-        [HttpDelete("{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllBandeirasTarifarias()
+        {
+            try
+            {
+                var bandeiras = await _bandeiraTarifariaService.GetAllBandeirasTarifarias();
+                return Ok(bandeiras);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao buscar bandeiras tarifárias: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{id:long}")]
+        public async Task<IActionResult> GetBandeiraTarifariaById(long id)
+        {
+            try
+            {
+                var bandeira = await _bandeiraTarifariaService.GetBandeiraTarifariaById(id);
+                return Ok(bandeira);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpPut("{id:long}")]
+        public async Task<IActionResult> UpdateBandeiraTarifaria(long id, [FromBody] BandeiraTarifariaRequest bandeiraRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _bandeiraTarifariaService.UpdateBandeiraTarifaria(id, bandeiraRequest);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao atualizar bandeira tarifária: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{id:long}")]
         public async Task<IActionResult> DeleteBandeiraTarifaria(long id)
         {
-            await _bandeiraService.DeleteBandeiraTarifariaAsync(id);
-            return NoContent();
+            try
+            {
+                await _bandeiraTarifariaService.DeleteBandeiraTarifaria(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }

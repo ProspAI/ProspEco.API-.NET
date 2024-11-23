@@ -4,32 +4,40 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProspEco.Model.Entities
 {
-    [Table("conquistas")]
+    [Table("prospecco_conquistas")]
     public class Conquista
     {
         [Key]
-        [Column("id")]
-        public long Id { get; set; }
+        [Column("id_conquista", TypeName = "number(11)")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long IdConquista { get; set; }
 
         [Required]
-        [Column("data_conquista")]
-        public DateTime DataConquista { get; set; }
+        [Column("dt_conquista", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime DtConquista { get; set; }
 
-        [MaxLength(255)]
-        [Column("descricao")]
-        public string Descricao { get; set; }
-
-        [Required]
-        [MaxLength(100)]
-        [Column("titulo")]
-        public string Titulo { get; set; }
+        [Column("ds_descricao", TypeName = "varchar(255)")]
+        public string DsDescricao { get; set; }
 
         [Required]
-        [Column("usuario_id")]
-        public long UsuarioId { get; set; }
+        [Column("ds_titulo", TypeName = "varchar(100)")]
+        public string DsTitulo { get; set; }
 
-        // Relacionamentos
-        [ForeignKey("UsuarioId")]
+        [Required]
+        [Column("id_usuario", TypeName = "number(11)")]
+        public long IdUsuario { get; set; }
+
+        // Relacionamento com Usuário
+        [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
+
+        [Column("dt_criacao", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime DtCriacao { get; set; }
+
+        [Column("dt_modificacao", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime? DtModificacao { get; set; }
     }
 }

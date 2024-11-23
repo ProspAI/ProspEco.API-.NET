@@ -1,77 +1,113 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProspEco.Model.DTOs;
-using ProspEco.Service.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using ProspEco.Model.DTO.Request;
+using ProspEco.Model.DTO.Response;
+using ProspEco.Service;
 
-namespace ProspEco.API.Controllers
+namespace ProspEco.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RecomendacoesController : ControllerBase
+    public class RecomendacaoController : ControllerBase
     {
         private readonly IRecomendacaoService _recomendacaoService;
 
-        public RecomendacoesController(IRecomendacaoService recomendacaoService)
+        public RecomendacaoController(IRecomendacaoService recomendacaoService)
         {
             _recomendacaoService = recomendacaoService;
         }
 
-        // GET: api/Recomendacoes
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<RecomendacaoDTO>>> GetRecomendacoes()
-        {
-            var recomendacoes = await _recomendacaoService.GetAllRecomendacoesAsync();
-            return Ok(recomendacoes);
-        }
-
-        // GET: api/Recomendacoes/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RecomendacaoDTO>> GetRecomendacao(long id)
-        {
-            var recomendacao = await _recomendacaoService.GetRecomendacaoByIdAsync(id);
-            if (recomendacao == null)
-            {
-                return NotFound(new { message = $"Recomendação com ID {id} não encontrada." });
-            }
-            return Ok(recomendacao);
-        }
-
-        // GET: api/Recomendacoes/usuario/1
-        [HttpGet("usuario/{usuarioId}")]
-        public async Task<ActionResult<IEnumerable<RecomendacaoDTO>>> GetRecomendacoesByUsuarioId(long usuarioId)
-        {
-            var recomendacoes = await _recomendacaoService.GetRecomendacoesByUsuarioIdAsync(usuarioId);
-            return Ok(recomendacoes);
-        }
-
-        // POST: api/Recomendacoes
         [HttpPost]
-        public async Task<ActionResult<RecomendacaoDTO>> CreateRecomendacao(RecomendacaoDTO recomendacaoDTO)
+        public async Task<IActionResult> AddRecomendacao([FromBody] RecomendacaoRequest recomendacaoRequest)
         {
-            var novaRecomendacao = await _recomendacaoService.CreateRecomendacaoAsync(recomendacaoDTO);
-            return CreatedAtAction(nameof(GetRecomendacao), new { id = novaRecomendacao.Id }, novaRecomendacao);
-        }
-
-        // PUT: api/Recomendacoes/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRecomendacao(long id, RecomendacaoDTO recomendacaoDTO)
-        {
-            if (id != recomendacaoDTO.Id)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "ID da recomendação na URL não corresponde ao ID no corpo da requisição." });
+                return BadRequest(ModelState);
             }
 
-            await _recomendacaoService.UpdateRecomendacaoAsync(id, recomendacaoDTO);
-            return NoContent();
+            try
+            {
+                await _recomendacaoService.AddRecomendacao(recomendacaoRequest);
+                return Created("", "Recomendação criada com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao criar recomendação: {ex.Message}");
+            }
         }
 
-        // DELETE: api/Recomendacoes/5
-        [HttpDelete("{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllRecomendacoes()
+        {
+            try
+            {
+                var recomendacoes = await _recomendacaoService.GetAllRecomendacoes();
+                return Ok(recomendacoes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao buscar recomendações: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{id:long}")]
+        public async Task<IActionResult> GetRecomendacaoById(long id)
+        {
+            try
+            {
+                var recomendacao = await _recomendacaoService.GetRecomendacaoById(id);
+                return Ok(recomendacao);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpGet("usuario/{usuarioId:long}")]
+        public IActionResult GetRecomendacoesByUsuarioId(long usuarioId)
+        {
+            try
+            {
+                var recomendacoes = _recomendacaoService.GetRecomendacoesByUsuarioId(usuarioId);
+                return Ok(recomendacoes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao buscar recomendações do usuário: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{id:long}")]
+        public async Task<IActionResult> UpdateRecomendacao(long id, [FromBody] RecomendacaoRequest recomendacaoRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _recomendacaoService.UpdateRecomendacao(id, recomendacaoRequest);
+                return NoContent(); // Atualização bem-sucedida
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao atualizar recomendação: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{id:long}")]
         public async Task<IActionResult> DeleteRecomendacao(long id)
         {
-            await _recomendacaoService.DeleteRecomendacaoAsync(id);
-            return NoContent();
+            try
+            {
+                await _recomendacaoService.DeleteRecomendacao(id);
+                return NoContent(); // Exclusão bem-sucedida
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }

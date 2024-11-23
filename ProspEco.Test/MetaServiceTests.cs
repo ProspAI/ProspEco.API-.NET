@@ -1,135 +1,194 @@
-﻿// ProspEco.Tests/Services/MetaServiceTests.cs
-using Xunit;
+﻿using Xunit;
 using Moq;
-using AutoMapper;
-using ProspEco.Service.Implementations;
-using ProspEco.Repository.Interfaces;
+using ProspEco.Service;
+using ProspEco.Repository;
 using ProspEco.Model.Entities;
-using ProspEco.Model.DTOs;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using ProspEco.Model.DTO.Request;
+using ProspEco.Model.DTO.Response;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProspEco.Tests.Services
 {
     public class MetaServiceTests
     {
-        private readonly Mock<IMetaRepository> _metaRepositoryMock;
-        private readonly Mock<IMapper> _mapperMock;
+        private readonly Mock<IRepository<Meta>> _metaRepositoryMock;
         private readonly MetaService _metaService;
 
         public MetaServiceTests()
         {
-            _metaRepositoryMock = new Mock<IMetaRepository>();
-            _mapperMock = new Mock<IMapper>();
-            _metaService = new MetaService(_metaRepositoryMock.Object, _mapperMock.Object);
+            _metaRepositoryMock = new Mock<IRepository<Meta>>();
+            _metaService = new MetaService(_metaRepositoryMock.Object);
         }
 
         [Fact]
-        public async Task GetMetaByIdAsync_ReturnsMetaDTO_WhenMetaExists()
+        public async Task GetMetaById_ReturnsResponse_WhenMetaExists()
         {
             // Arrange
             var metaId = 1L;
-            var meta = new Meta { Id = metaId, ConsumoAlvo = 100.5, Atingida = false, DataInicio = DateTime.UtcNow.AddMonths(-1), DataFim = DateTime.UtcNow.AddMonths(1), UsuarioId = 1L };
-            var metaDTO = new MetaDTO { Id = metaId, ConsumoAlvo = 100.5, Atingida = false, DataInicio = meta.DataInicio, DataFim = meta.DataFim, UsuarioId = 1L };
+            var meta = new Meta
+            {
+                IdMeta = metaId,
+                FlAtingida = false,
+                VlConsumoAlvo = 100,
+                DtInicio = new DateTime(2023, 01, 01),
+                DtFim = new DateTime(2023, 01, 31),
+                IdUsuario = 1,
+                DtCriacao = DateTime.UtcNow
+            };
 
             _metaRepositoryMock.Setup(repo => repo.GetByIdAsync(metaId)).ReturnsAsync(meta);
-            _mapperMock.Setup(m => m.Map<MetaDTO>(meta)).Returns(metaDTO);
 
             // Act
-            var result = await _metaService.GetMetaByIdAsync(metaId);
+            var result = await _metaService.GetMetaById(metaId);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(metaId, result.Id);
-            Assert.Equal(100.5, result.ConsumoAlvo);
-            Assert.False(result.Atingida);
+            Assert.Equal(metaId, result.IdMeta);
+            Assert.Equal(100, result.ConsumoAlvo);
         }
 
         [Fact]
-        public async Task GetMetaByIdAsync_ReturnsNull_WhenMetaDoesNotExist()
+        public async Task GetMetaById_ThrowsException_WhenMetaDoesNotExist()
         {
             // Arrange
             var metaId = 1L;
             _metaRepositoryMock.Setup(repo => repo.GetByIdAsync(metaId)).ReturnsAsync((Meta)null);
-            _mapperMock.Setup(m => m.Map<MetaDTO>(It.IsAny<Meta>())).Returns((MetaDTO)null);
 
-            // Act
-            var result = await _metaService.GetMetaByIdAsync(metaId);
-
-            // Assert
-            Assert.Null(result);
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _metaService.GetMetaById(metaId));
+            Assert.Equal("Meta não encontrada.", exception.Message);
         }
 
         [Fact]
-        public async Task CreateMetaAsync_AddsMetaAndReturnsMetaDTO()
+        public async Task GetAllMetas_ReturnsAllMetas()
         {
             // Arrange
-            var metaDTO = new MetaDTO { ConsumoAlvo = 200.0, Atingida = false, DataInicio = DateTime.UtcNow, DataFim = DateTime.UtcNow.AddMonths(2), UsuarioId = 1L };
-            var meta = new Meta { ConsumoAlvo = 200.0, Atingida = false, DataInicio = metaDTO.DataInicio, DataFim = metaDTO.DataFim, UsuarioId = 1L };
-            var metaDTOResult = new MetaDTO { Id = 2L, ConsumoAlvo = 200.0, Atingida = false, DataInicio = meta.DataInicio, DataFim = meta.DataFim, UsuarioId = 1L };
+            var metas = new List<Meta>
+            {
+                new Meta { IdMeta = 1, VlConsumoAlvo = 100, FlAtingida = false, DtInicio = new DateTime(2023, 01, 01), DtFim = new DateTime(2023, 01, 31) },
+                new Meta { IdMeta = 2, VlConsumoAlvo = 200, FlAtingida = true, DtInicio = new DateTime(2023, 02, 01), DtFim = new DateTime(2023, 02, 28) }
+            };
 
-            _mapperMock.Setup(m => m.Map<Meta>(metaDTO)).Returns(meta);
-            _metaRepositoryMock.Setup(repo => repo.AddAsync(meta)).Returns(Task.CompletedTask);
-            _mapperMock.Setup(m => m.Map<MetaDTO>(meta)).Returns(metaDTOResult);
+            _metaRepositoryMock.Setup(repo => repo.GetAllAsync()).ReturnsAsync(metas);
 
             // Act
-            var result = await _metaService.CreateMetaAsync(metaDTO);
+            var result = await _metaService.GetAllMetas();
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(2L, result.Id);
-            Assert.Equal(200.0, result.ConsumoAlvo);
-            Assert.False(result.Atingida);
+            Assert.Equal(2, result.Count());
+            Assert.Contains(result, r => r.ConsumoAlvo == 100);
+            Assert.Contains(result, r => r.ConsumoAlvo == 200);
         }
 
         [Fact]
-        public async Task UpdateMetaAsync_UpdatesExistingMeta()
+        public async Task AddMeta_CreatesMetaSuccessfully()
+        {
+            // Arrange
+            var metaRequest = new MetaRequest
+            {
+                Atingida = false,
+                ConsumoAlvo = 100,
+                DataInicio = new DateTime(2023, 01, 01),
+                DataFim = new DateTime(2023, 01, 31),
+                UsuarioId = 1
+            };
+
+            _metaRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Meta>())).Returns(Task.CompletedTask);
+
+            // Act
+            await _metaService.AddMeta(metaRequest);
+
+            // Assert
+            _metaRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Meta>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task UpdateMeta_UpdatesExistingMetaSuccessfully()
         {
             // Arrange
             var metaId = 1L;
-            var metaDTO = new MetaDTO { Id = metaId, ConsumoAlvo = 150.0, Atingida = true, DataInicio = DateTime.UtcNow.AddMonths(-2), DataFim = DateTime.UtcNow.AddMonths(1), UsuarioId = 1L };
-            var metaExistente = new Meta { Id = metaId, ConsumoAlvo = 100.0, Atingida = false, DataInicio = DateTime.UtcNow.AddMonths(-1), DataFim = DateTime.UtcNow.AddMonths(2), UsuarioId = 1L };
+            var metaRequest = new MetaRequest
+            {
+                Atingida = true,
+                ConsumoAlvo = 150,
+                DataInicio = new DateTime(2023, 01, 01),
+                DataFim = new DateTime(2023, 01, 31),
+                UsuarioId = 1
+            };
+
+            var metaExistente = new Meta
+            {
+                IdMeta = metaId,
+                FlAtingida = false,
+                VlConsumoAlvo = 100,
+                DtInicio = new DateTime(2023, 01, 01),
+                DtFim = new DateTime(2023, 01, 31),
+                IdUsuario = 1
+            };
 
             _metaRepositoryMock.Setup(repo => repo.GetByIdAsync(metaId)).ReturnsAsync(metaExistente);
-            _mapperMock.Setup(m => m.Map(metaDTO, metaExistente)).Callback<MetaDTO, Meta>((dto, entity) =>
-            {
-                entity.ConsumoAlvo = dto.ConsumoAlvo;
-                entity.Atingida = dto.Atingida;
-                entity.DataInicio = dto.DataInicio;
-                entity.DataFim = dto.DataFim;
-                entity.UsuarioId = dto.UsuarioId;
-            });
-            _metaRepositoryMock.Setup(repo => repo.UpdateAsync(metaExistente)).Returns(Task.CompletedTask);
 
             // Act
-            await _metaService.UpdateMetaAsync(metaId, metaDTO);
+            await _metaService.UpdateMeta(metaId, metaRequest);
 
             // Assert
-            _mapperMock.Verify(m => m.Map(metaDTO, metaExistente), Times.Once);
-            _metaRepositoryMock.Verify(repo => repo.UpdateAsync(metaExistente), Times.Once);
-            Assert.Equal(150.0, metaExistente.ConsumoAlvo);
-            Assert.True(metaExistente.Atingida);
-            Assert.Equal(metaDTO.DataInicio, metaExistente.DataInicio);
-            Assert.Equal(metaDTO.DataFim, metaExistente.DataFim);
+            _metaRepositoryMock.Verify(repo => repo.UpdateAsync(metaId, It.IsAny<Meta>()), Times.Once);
+            Assert.True(metaExistente.FlAtingida);
+            Assert.Equal(150, metaExistente.VlConsumoAlvo);
         }
 
         [Fact]
-        public async Task UpdateMetaAsync_DoesNothing_WhenMetaDoesNotExist()
+        public async Task UpdateMeta_ThrowsException_WhenMetaDoesNotExist()
         {
             // Arrange
             var metaId = 1L;
-            var metaDTO = new MetaDTO { Id = metaId, ConsumoAlvo = 150.0, Atingida = true, DataInicio = DateTime.UtcNow.AddMonths(-2), DataFim = DateTime.UtcNow.AddMonths(1), UsuarioId = 1L };
+            var metaRequest = new MetaRequest
+            {
+                Atingida = true,
+                ConsumoAlvo = 150,
+                DataInicio = new DateTime(2023, 01, 01),
+                DataFim = new DateTime(2023, 01, 31),
+                UsuarioId = 1
+            };
 
             _metaRepositoryMock.Setup(repo => repo.GetByIdAsync(metaId)).ReturnsAsync((Meta)null);
-            _mapperMock.Setup(m => m.Map<MetaDTO, Meta>(metaDTO, It.IsAny<Meta>())).Verifiable();
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _metaService.UpdateMeta(metaId, metaRequest));
+            Assert.Equal("Meta não encontrada.", exception.Message);
+        }
+
+        [Fact]
+        public async Task DeleteMeta_DeletesMetaSuccessfully()
+        {
+            // Arrange
+            var metaId = 1L;
+            var metaExistente = new Meta { IdMeta = metaId };
+
+            _metaRepositoryMock.Setup(repo => repo.GetByIdAsync(metaId)).ReturnsAsync(metaExistente);
+            _metaRepositoryMock.Setup(repo => repo.DeleteAsync(metaId)).Returns(Task.CompletedTask);
 
             // Act
-            await _metaService.UpdateMetaAsync(metaId, metaDTO);
+            await _metaService.DeleteMeta(metaId);
 
             // Assert
-            _mapperMock.Verify(m => m.Map<MetaDTO, Meta>(metaDTO, It.IsAny<Meta>()), Times.Never);
-            _metaRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Meta>()), Times.Never);
+            _metaRepositoryMock.Verify(repo => repo.DeleteAsync(metaId), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteMeta_ThrowsException_WhenMetaDoesNotExist()
+        {
+            // Arrange
+            var metaId = 1L;
+            _metaRepositoryMock.Setup(repo => repo.GetByIdAsync(metaId)).ReturnsAsync((Meta)null);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _metaService.DeleteMeta(metaId));
+            Assert.Equal("Meta não encontrada.", exception.Message);
         }
     }
 }

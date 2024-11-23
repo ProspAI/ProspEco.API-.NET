@@ -10,6 +10,7 @@ C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Re
 C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.AssemblyInfoInputs.cache
 C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.AssemblyInfo.cs
 C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.csproj.CoreCompileInputs.cache
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.sourcelink.json
 C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.94B9C5D2.Up2Date
 C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.dll
 C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\refint\ProspEco.Repository.dll

@@ -4,26 +4,36 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProspEco.Model.Entities
 {
-    [Table("recomendacoes")]
+    [Table("prospecco_recomendacoes")]
     public class Recomendacao
     {
         [Key]
-        [Column("id")]
-        public long Id { get; set; }
+        [Column("id_recomendacao", TypeName = "number(11)")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long IdRecomendacao { get; set; }
 
         [Required]
-        [Column("data_hora")]
-        public DateTime DataHora { get; set; }
+        [Column("dt_hora", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime DtHora { get; set; }
 
-        [Column("mensagem")]
-        public string Mensagem { get; set; }
+        [Column("ds_mensagem", TypeName = "varchar(255)")]
+        public string DsMensagem { get; set; }
 
         [Required]
-        [Column("usuario_id")]
-        public long UsuarioId { get; set; }
+        [Column("id_usuario", TypeName = "number(11)")]
+        public long IdUsuario { get; set; }
 
-        // Relacionamentos
-        [ForeignKey("UsuarioId")]
+        // Relacionamento com Usuário
+        [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; }
+
+        [Column("dt_criacao", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime DtCriacao { get; set; }
+
+        [Column("dt_modificacao", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime? DtModificacao { get; set; }
     }
 }

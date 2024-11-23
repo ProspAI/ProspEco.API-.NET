@@ -4,20 +4,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProspEco.Model.Entities
 {
-    [Table("bandeiras_tarifarias")]
+    [Table("prospecco_bandeiras_tarifarias")]
     public class BandeiraTarifaria
     {
         [Key]
-        [Column("id")]
-        public long Id { get; set; }
+        [Column("id_bandeira", TypeName = "number(11)")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long IdBandeira { get; set; }
 
         [Required]
-        [Column("data_vigencia")]
-        public DateTime DataVigencia { get; set; }
+        [Column("dt_vigencia", TypeName = "date")]
+        [DataType(DataType.Date)]
+        public DateTime DtVigencia { get; set; }
 
         [Required]
-        [MaxLength(20)]
-        [Column("tipo_bandeira")]
-        public string TipoBandeira { get; set; }
+        [Column("ds_tipo_bandeira", TypeName = "varchar(20)")]
+        public string DsTipoBandeira { get; set; }
+
+        [Column("dt_criacao", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime DtCriacao { get; set; }
+
+        [Column("dt_modificacao", TypeName = "date")]
+        [DataType(DataType.DateTime)]
+        public DateTime? DtModificacao { get; set; }
     }
 }

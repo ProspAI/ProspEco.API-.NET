@@ -6,6 +6,7 @@ C:\Users\HP\Downloads\novo\novo\ProspEco.Model\obj\Debug\net8.0\ProspEco.Model.G
 C:\Users\HP\Downloads\novo\novo\ProspEco.Model\obj\Debug\net8.0\ProspEco.Model.AssemblyInfoInputs.cache
 C:\Users\HP\Downloads\novo\novo\ProspEco.Model\obj\Debug\net8.0\ProspEco.Model.AssemblyInfo.cs
 C:\Users\HP\Downloads\novo\novo\ProspEco.Model\obj\Debug\net8.0\ProspEco.Model.csproj.CoreCompileInputs.cache
+C:\Users\HP\Downloads\novo\novo\ProspEco.Model\obj\Debug\net8.0\ProspEco.Model.sourcelink.json
 C:\Users\HP\Downloads\novo\novo\ProspEco.Model\obj\Debug\net8.0\ProspEco.Model.dll
 C:\Users\HP\Downloads\novo\novo\ProspEco.Model\obj\Debug\net8.0\refint\ProspEco.Model.dll
 C:\Users\HP\Downloads\novo\novo\ProspEco.Model\obj\Debug\net8.0\ProspEco.Model.pdb

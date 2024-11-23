@@ -9,8 +9,8 @@ namespace ProspEco.API.Configuration
 
     public class ConnectionStrings
     {
-        public string DefaultConnection { get; set; }
-        public string OracleFIAP { get; set; }
+        public string? DefaultConnection { get; set; }
+        public string? OracleFIAP { get; set; }
     }
 
     public class SwaggerSettings

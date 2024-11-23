@@ -1,128 +1,179 @@
-﻿// ProspEco.Tests/Services/BandeiraTarifariaServiceTests.cs
-using Xunit;
+﻿using Xunit;
 using Moq;
-using AutoMapper;
-using ProspEco.Service.Implementations;
-using ProspEco.Repository.Interfaces;
+using ProspEco.Service;
+using ProspEco.Repository;
 using ProspEco.Model.Entities;
-using ProspEco.Model.DTOs;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using ProspEco.Model.DTO.Request;
+using ProspEco.Model.DTO.Response;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProspEco.Tests.Services
 {
     public class BandeiraTarifariaServiceTests
     {
-        private readonly Mock<IBandeiraTarifariaRepository> _bandeiraRepositoryMock;
-        private readonly Mock<IMapper> _mapperMock;
-        private readonly BandeiraTarifariaService _bandeiraService;
+        private readonly Mock<IRepository<BandeiraTarifaria>> _bandeiraTarifariaRepositoryMock;
+        private readonly BandeiraTarifariaService _bandeiraTarifariaService;
 
         public BandeiraTarifariaServiceTests()
         {
-            _bandeiraRepositoryMock = new Mock<IBandeiraTarifariaRepository>();
-            _mapperMock = new Mock<IMapper>();
-            _bandeiraService = new BandeiraTarifariaService(_bandeiraRepositoryMock.Object, _mapperMock.Object);
+            _bandeiraTarifariaRepositoryMock = new Mock<IRepository<BandeiraTarifaria>>();
+            _bandeiraTarifariaService = new BandeiraTarifariaService(_bandeiraTarifariaRepositoryMock.Object);
         }
 
         [Fact]
-        public async Task GetBandeiraTarifariaByIdAsync_ReturnsBandeiraTarifariaDTO_WhenBandeiraExists()
+        public async Task GetBandeiraTarifariaById_ReturnsResponse_WhenBandeiraExists()
         {
             // Arrange
             var bandeiraId = 1L;
-            var bandeira = new BandeiraTarifaria { Id = bandeiraId, TipoBandeira = "Verde", DataVigencia = DateTime.UtcNow };
-            var bandeiraDTO = new BandeiraTarifariaDTO { Id = bandeiraId, TipoBandeira = "Verde", DataVigencia = bandeira.DataVigencia };
+            var bandeira = new BandeiraTarifaria
+            {
+                IdBandeira = bandeiraId,
+                DtVigencia = new DateTime(2023, 01, 01),
+                DsTipoBandeira = "Verde",
+                DtCriacao = DateTime.UtcNow
+            };
 
-            _bandeiraRepositoryMock.Setup(repo => repo.GetByIdAsync(bandeiraId)).ReturnsAsync(bandeira);
-            _mapperMock.Setup(m => m.Map<BandeiraTarifariaDTO>(bandeira)).Returns(bandeiraDTO);
+            _bandeiraTarifariaRepositoryMock.Setup(repo => repo.GetByIdAsync(bandeiraId)).ReturnsAsync(bandeira);
 
             // Act
-            var result = await _bandeiraService.GetBandeiraTarifariaByIdAsync(bandeiraId);
+            var result = await _bandeiraTarifariaService.GetBandeiraTarifariaById(bandeiraId);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(bandeiraId, result.Id);
+            Assert.Equal(bandeiraId, result.IdBandeira);
             Assert.Equal("Verde", result.TipoBandeira);
         }
 
         [Fact]
-        public async Task GetBandeiraTarifariaByIdAsync_ReturnsNull_WhenBandeiraDoesNotExist()
+        public async Task GetBandeiraTarifariaById_ThrowsException_WhenBandeiraDoesNotExist()
         {
             // Arrange
             var bandeiraId = 1L;
-            _bandeiraRepositoryMock.Setup(repo => repo.GetByIdAsync(bandeiraId)).ReturnsAsync((BandeiraTarifaria)null);
-            _mapperMock.Setup(m => m.Map<BandeiraTarifariaDTO>(It.IsAny<BandeiraTarifaria>())).Returns((BandeiraTarifariaDTO)null);
+            _bandeiraTarifariaRepositoryMock.Setup(repo => repo.GetByIdAsync(bandeiraId)).ReturnsAsync((BandeiraTarifaria)null);
 
-            // Act
-            var result = await _bandeiraService.GetBandeiraTarifariaByIdAsync(bandeiraId);
-
-            // Assert
-            Assert.Null(result);
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _bandeiraTarifariaService.GetBandeiraTarifariaById(bandeiraId));
+            Assert.Equal("Bandeira tarifária não encontrada.", exception.Message);
         }
 
         [Fact]
-        public async Task CreateBandeiraTarifariaAsync_AddsBandeiraAndReturnsBandeiraTarifariaDTO()
+        public async Task GetAllBandeirasTarifarias_ReturnsAllBandeiras()
         {
             // Arrange
-            var bandeiraDTO = new BandeiraTarifariaDTO { TipoBandeira = "Amarela", DataVigencia = DateTime.UtcNow };
-            var bandeira = new BandeiraTarifaria { TipoBandeira = "Amarela", DataVigencia = bandeiraDTO.DataVigencia };
-            var bandeiraDTOResult = new BandeiraTarifariaDTO { Id = 2L, TipoBandeira = "Amarela", DataVigencia = bandeira.DataVigencia };
+            var bandeiras = new List<BandeiraTarifaria>
+            {
+                new BandeiraTarifaria { IdBandeira = 1, DsTipoBandeira = "Verde", DtVigencia = new DateTime(2023, 01, 01) },
+                new BandeiraTarifaria { IdBandeira = 2, DsTipoBandeira = "Amarela", DtVigencia = new DateTime(2023, 02, 01) }
+            };
 
-            _mapperMock.Setup(m => m.Map<BandeiraTarifaria>(bandeiraDTO)).Returns(bandeira);
-            _bandeiraRepositoryMock.Setup(repo => repo.AddAsync(bandeira)).Returns(Task.CompletedTask);
-            _mapperMock.Setup(m => m.Map<BandeiraTarifariaDTO>(bandeira)).Returns(bandeiraDTOResult);
+            _bandeiraTarifariaRepositoryMock.Setup(repo => repo.GetAllAsync()).ReturnsAsync(bandeiras);
 
             // Act
-            var result = await _bandeiraService.CreateBandeiraTarifariaAsync(bandeiraDTO);
+            var result = await _bandeiraTarifariaService.GetAllBandeirasTarifarias();
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(2L, result.Id);
-            Assert.Equal("Amarela", result.TipoBandeira);
+            Assert.Equal(2, result.Count());
+            Assert.Contains(result, r => r.TipoBandeira == "Verde");
+            Assert.Contains(result, r => r.TipoBandeira == "Amarela");
         }
 
         [Fact]
-        public async Task UpdateBandeiraTarifariaAsync_UpdatesExistingBandeira()
+        public async Task AddBandeiraTarifaria_CreatesBandeiraSuccessfully()
         {
             // Arrange
-            var bandeiraId = 1L;
-            var bandeiraDTO = new BandeiraTarifariaDTO { Id = bandeiraId, TipoBandeira = "Vermelha", DataVigencia = DateTime.UtcNow.AddDays(30) };
-            var bandeiraExistente = new BandeiraTarifaria { Id = bandeiraId, TipoBandeira = "Verde", DataVigencia = DateTime.UtcNow };
-
-            _bandeiraRepositoryMock.Setup(repo => repo.GetByIdAsync(bandeiraId)).ReturnsAsync(bandeiraExistente);
-            _mapperMock.Setup(m => m.Map(bandeiraDTO, bandeiraExistente)).Callback<BandeiraTarifariaDTO, BandeiraTarifaria>((dto, entity) =>
+            var bandeiraRequest = new BandeiraTarifariaRequest
             {
-                entity.TipoBandeira = dto.TipoBandeira;
-                entity.DataVigencia = dto.DataVigencia;
-            });
-            _bandeiraRepositoryMock.Setup(repo => repo.UpdateAsync(bandeiraExistente)).Returns(Task.CompletedTask);
+                DataVigencia = new DateTime(2023, 01, 01),
+                TipoBandeira = "Verde"
+            };
+
+            _bandeiraTarifariaRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<BandeiraTarifaria>())).Returns(Task.CompletedTask);
 
             // Act
-            await _bandeiraService.UpdateBandeiraTarifariaAsync(bandeiraId, bandeiraDTO);
+            await _bandeiraTarifariaService.AddBandeiraTarifaria(bandeiraRequest);
 
             // Assert
-            _mapperMock.Verify(m => m.Map(bandeiraDTO, bandeiraExistente), Times.Once);
-            _bandeiraRepositoryMock.Verify(repo => repo.UpdateAsync(bandeiraExistente), Times.Once);
-            Assert.Equal("Vermelha", bandeiraExistente.TipoBandeira);
-            Assert.Equal(bandeiraDTO.DataVigencia, bandeiraExistente.DataVigencia);
+            _bandeiraTarifariaRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<BandeiraTarifaria>()), Times.Once);
         }
 
         [Fact]
-        public async Task UpdateBandeiraTarifariaAsync_DoesNothing_WhenBandeiraDoesNotExist()
+        public async Task UpdateBandeiraTarifaria_UpdatesExistingBandeiraSuccessfully()
         {
             // Arrange
             var bandeiraId = 1L;
-            var bandeiraDTO = new BandeiraTarifariaDTO { Id = bandeiraId, TipoBandeira = "Vermelha", DataVigencia = DateTime.UtcNow.AddDays(30) };
+            var bandeiraRequest = new BandeiraTarifariaRequest
+            {
+                DataVigencia = new DateTime(2023, 01, 01),
+                TipoBandeira = "Amarela"
+            };
 
-            _bandeiraRepositoryMock.Setup(repo => repo.GetByIdAsync(bandeiraId)).ReturnsAsync((BandeiraTarifaria)null);
-            _mapperMock.Setup(m => m.Map<BandeiraTarifariaDTO, BandeiraTarifaria>(bandeiraDTO, It.IsAny<BandeiraTarifaria>())).Verifiable();
+            var bandeiraExistente = new BandeiraTarifaria
+            {
+                IdBandeira = bandeiraId,
+                DsTipoBandeira = "Verde",
+                DtVigencia = new DateTime(2023, 01, 01),
+                DtCriacao = DateTime.UtcNow
+            };
+
+            _bandeiraTarifariaRepositoryMock.Setup(repo => repo.GetByIdAsync(bandeiraId)).ReturnsAsync(bandeiraExistente);
 
             // Act
-            await _bandeiraService.UpdateBandeiraTarifariaAsync(bandeiraId, bandeiraDTO);
+            await _bandeiraTarifariaService.UpdateBandeiraTarifaria(bandeiraId, bandeiraRequest);
 
             // Assert
-            _mapperMock.Verify(m => m.Map<BandeiraTarifariaDTO, BandeiraTarifaria>(bandeiraDTO, It.IsAny<BandeiraTarifaria>()), Times.Never);
-            _bandeiraRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<BandeiraTarifaria>()), Times.Never);
+            _bandeiraTarifariaRepositoryMock.Verify(repo => repo.UpdateAsync(bandeiraId, It.IsAny<BandeiraTarifaria>()), Times.Once);
+            Assert.Equal("Amarela", bandeiraExistente.DsTipoBandeira);
+        }
+
+        [Fact]
+        public async Task UpdateBandeiraTarifaria_ThrowsException_WhenBandeiraDoesNotExist()
+        {
+            // Arrange
+            var bandeiraId = 1L;
+            var bandeiraRequest = new BandeiraTarifariaRequest
+            {
+                DataVigencia = new DateTime(2023, 01, 01),
+                TipoBandeira = "Amarela"
+            };
+
+            _bandeiraTarifariaRepositoryMock.Setup(repo => repo.GetByIdAsync(bandeiraId)).ReturnsAsync((BandeiraTarifaria)null);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _bandeiraTarifariaService.UpdateBandeiraTarifaria(bandeiraId, bandeiraRequest));
+            Assert.Equal("Bandeira tarifária não encontrada.", exception.Message);
+        }
+
+        [Fact]
+        public async Task DeleteBandeiraTarifaria_DeletesBandeiraSuccessfully()
+        {
+            // Arrange
+            var bandeiraId = 1L;
+            var bandeiraExistente = new BandeiraTarifaria { IdBandeira = bandeiraId };
+
+            _bandeiraTarifariaRepositoryMock.Setup(repo => repo.GetByIdAsync(bandeiraId)).ReturnsAsync(bandeiraExistente);
+            _bandeiraTarifariaRepositoryMock.Setup(repo => repo.DeleteAsync(bandeiraId)).Returns(Task.CompletedTask);
+
+            // Act
+            await _bandeiraTarifariaService.DeleteBandeiraTarifaria(bandeiraId);
+
+            // Assert
+            _bandeiraTarifariaRepositoryMock.Verify(repo => repo.DeleteAsync(bandeiraId), Times.Once);
+        }
+
+        [Fact]
+        public async Task DeleteBandeiraTarifaria_ThrowsException_WhenBandeiraDoesNotExist()
+        {
+            // Arrange
+            var bandeiraId = 1L;
+            _bandeiraTarifariaRepositoryMock.Setup(repo => repo.GetByIdAsync(bandeiraId)).ReturnsAsync((BandeiraTarifaria)null);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => _bandeiraTarifariaService.DeleteBandeiraTarifaria(bandeiraId));
+            Assert.Equal("Bandeira tarifária não encontrada.", exception.Message);
         }
     }
 }

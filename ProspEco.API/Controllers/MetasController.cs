@@ -1,89 +1,99 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProspEco.Model.DTOs;
-using ProspEco.Service.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using ProspEco.Model.DTO.Request;
+using ProspEco.Model.DTO.Response;
+using ProspEco.Service;
 
-namespace ProspEco.API.Controllers
+namespace ProspEco.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MetasController : ControllerBase
+    public class MetaController : ControllerBase
     {
         private readonly IMetaService _metaService;
 
-        public MetasController(IMetaService metaService)
+        public MetaController(IMetaService metaService)
         {
             _metaService = metaService;
         }
 
-        // GET: api/Metas
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<MetaDTO>>> GetMetas()
-        {
-            var metas = await _metaService.GetAllMetasAsync();
-            return Ok(metas);
-        }
-
-        // GET: api/Metas/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<MetaDTO>> GetMeta(long id)
-        {
-            var meta = await _metaService.GetMetaByIdAsync(id);
-            if (meta == null)
-            {
-                return NotFound(new { message = $"Meta com ID {id} não encontrada." });
-            }
-            return Ok(meta);
-        }
-
-        // GET: api/Metas/usuario/1
-        [HttpGet("usuario/{usuarioId}")]
-        public async Task<ActionResult<IEnumerable<MetaDTO>>> GetMetasByUsuarioId(long usuarioId)
-        {
-            var metas = await _metaService.GetMetasByUsuarioIdAsync(usuarioId);
-            return Ok(metas);
-        }
-
-        // GET: api/Metas/active/1
-        [HttpGet("active/{usuarioId}")]
-        public async Task<ActionResult<MetaDTO>> GetActiveMeta(long usuarioId)
-        {
-            var meta = await _metaService.GetActiveMetaAsync(usuarioId);
-            if (meta == null)
-            {
-                return NotFound(new { message = $"Nenhuma meta ativa encontrada para o usuário com ID {usuarioId}." });
-            }
-            return Ok(meta);
-        }
-
-        // POST: api/Metas
         [HttpPost]
-        public async Task<ActionResult<MetaDTO>> CreateMeta(MetaDTO metaDTO)
+        public async Task<IActionResult> AddMeta([FromBody] MetaRequest metaRequest)
         {
-            var novaMeta = await _metaService.CreateMetaAsync(metaDTO);
-            return CreatedAtAction(nameof(GetMeta), new { id = novaMeta.Id }, novaMeta);
-        }
-
-        // PUT: api/Metas/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMeta(long id, MetaDTO metaDTO)
-        {
-            if (id != metaDTO.Id)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "ID da meta na URL não corresponde ao ID no corpo da requisição." });
+                return BadRequest(ModelState);
             }
 
-            await _metaService.UpdateMetaAsync(id, metaDTO);
-            return NoContent();
+            try
+            {
+                await _metaService.AddMeta(metaRequest);
+                return Created("", "Meta criada com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao criar meta: {ex.Message}");
+            }
         }
 
-        // DELETE: api/Metas/5
-        [HttpDelete("{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllMetas()
+        {
+            try
+            {
+                var metas = await _metaService.GetAllMetas();
+                return Ok(metas);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao buscar metas: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{id:long}")]
+        public async Task<IActionResult> GetMetaById(long id)
+        {
+            try
+            {
+                var meta = await _metaService.GetMetaById(id);
+                return Ok(meta);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpPut("{id:long}")]
+        public async Task<IActionResult> UpdateMeta(long id, [FromBody] MetaRequest metaRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _metaService.UpdateMeta(id, metaRequest);
+                return NoContent(); // Atualização bem-sucedida
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao atualizar meta: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{id:long}")]
         public async Task<IActionResult> DeleteMeta(long id)
         {
-            await _metaService.DeleteMetaAsync(id);
-            return NoContent();
+            try
+            {
+                await _metaService.DeleteMeta(id);
+                return NoContent(); // Exclusão bem-sucedida
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }

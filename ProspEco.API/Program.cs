@@ -1,109 +1,69 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using ProspEco.API.Configuration;
-using ProspEco.Database.Contexts;
-using ProspEco.Repository.Implementations;
-using ProspEco.Repository.Interfaces;
-using ProspEco.Service.Implementations;
-using ProspEco.Service.Interfaces;
-using Serilog;
+using ProspEco.API.Extensions;
+using ProspEco.Model.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar Serilog
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .CreateLogger();
+// Configuração do aplicativo
+IConfiguration configuration = builder.Configuration;
+AppConfiguration appConfiguration = new AppConfiguration();
+configuration.Bind(appConfiguration);
 
-builder.Host.UseSerilog();
+appConfiguration.ConnectionStrings = new ConnectionStrings
+{
+    OracleFIAP = configuration.GetSection("ConnectionStrings:OracleFIAP").Value,
+    DefaultConnection = configuration.GetSection("ConnectionStrings:DefaultConnection").Value
+};
 
-// Adicionar serviços ao contêiner
-builder.Services.Configure<AppConfiguration>(builder.Configuration.GetSection("AppConfiguration"));
 
-// Configurar o DbContext com a string de conexão Oracle
-var connectionString = builder.Configuration.GetSection("AppConfiguration:ConnectionStrings:DefaultConnection").Value;
-builder.Services.AddDbContext<ProspEcoContext>(options =>
-    options.UseOracle(connectionString));
-
-// Registrar repositórios específicos
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IAparelhoRepository, AparelhoRepository>();
-builder.Services.AddScoped<IBandeiraTarifariaRepository, BandeiraTarifariaRepository>();
-builder.Services.AddScoped<IConquistaRepository, ConquistaRepository>();
-builder.Services.AddScoped<IMetaRepository, MetaRepository>();
-builder.Services.AddScoped<INotificacaoRepository, NotificacaoRepository>();
-builder.Services.AddScoped<IRecomendacaoRepository, RecomendacaoRepository>();
-builder.Services.AddScoped<IRegistroConsumoRepository, RegistroConsumoRepository>();
-
-// Registrar serviços
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-builder.Services.AddScoped<IAparelhoService, AparelhoService>();
-builder.Services.AddScoped<IBandeiraTarifariaService, BandeiraTarifariaService>();
-builder.Services.AddScoped<IConquistaService, ConquistaService>();
-builder.Services.AddScoped<IMetaService, MetaService>();
-builder.Services.AddScoped<INotificacaoService, NotificacaoService>();
-builder.Services.AddScoped<IRecomendacaoService, RecomendacaoService>();
-builder.Services.AddScoped<IRegistroConsumoService, RegistroConsumoService>();
-
-// Adicionar AutoMapper e configurar perfis
-builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
-
-// Adicionar controllers
+// Registrar configurações e serviços no container de injeção de dependência
+builder.Services.Configure<AppConfiguration>(configuration);
 builder.Services.AddControllers();
-
-// Configurar Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    var appConfig = builder.Configuration.GetSection("AppConfiguration").Get<AppConfiguration>();
-    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    {
-        Title = appConfig.Swagger.Title,
-        Description = appConfig.Swagger.Description,
-        Contact = new Microsoft.OpenApi.Models.OpenApiContact
-        {
-            Name = appConfig.Swagger.Name,
-            Email = appConfig.Swagger.Email
-        },
-        Version = "v1"
-    });
-
-    // Remover configuração de autenticação JWT no Swagger
-});
-
-// Configurar CORS (opcional)
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
-});
+builder.Services.AddDBContexts(appConfiguration);
+builder.Services.AddSwagger(appConfiguration);
+builder.Services.AddServices();
+builder.Services.AddRepositories();
+builder.Services.AddHealthChecks(appConfiguration);
+builder.Services.AddAuthenticationAndAuthorization();
 
 var app = builder.Build();
 
-// Configurar o pipeline HTTP
+// Configuração do pipeline de middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseSerilogRequestLogging();
-
-// Remover middleware de tratamento de exceções
-// app.UseMiddleware<ExceptionMiddleware>();
-
 app.UseHttpsRedirection();
+app.UseRouting();
 
-// Usar CORS (opcional)
-app.UseCors("AllowAll");
-
-// Remover autenticação e autorização
-// app.UseAuthentication(); // Se estiver usando autenticação
-// app.UseAuthorization();
+app.UseAuthentication(); // Certifique-se de adicionar isso antes da autorização
+app.UseAuthorization();
 
 app.MapControllers();
 
+// Endpoint para Health Checks
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHealthChecks("/health-check", new HealthCheckOptions
+    {
+        Predicate = _ => true,
+        ResponseWriter = HealthCheckExtensions.WriteResponse
+    });
+});
+
+// Endpoint para logout
+app.MapPost("/logout", async (SignInManager<IdentityUser> signInManager) =>
+{
+    await signInManager.SignOutAsync();
+    return Results.Ok("Logout realizado com sucesso.");
+});
+
+// Executar o aplicativo
 app.Run();

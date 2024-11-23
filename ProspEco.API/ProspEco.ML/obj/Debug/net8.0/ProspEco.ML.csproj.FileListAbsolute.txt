@@ -7,6 +7,7 @@ C:\Users\HP\Downloads\novo\novo\ProspEco.API\ProspEco.ML\obj\Debug\net8.0\ProspE
 C:\Users\HP\Downloads\novo\novo\ProspEco.API\ProspEco.ML\obj\Debug\net8.0\ProspEco.ML.AssemblyInfoInputs.cache
 C:\Users\HP\Downloads\novo\novo\ProspEco.API\ProspEco.ML\obj\Debug\net8.0\ProspEco.ML.AssemblyInfo.cs
 C:\Users\HP\Downloads\novo\novo\ProspEco.API\ProspEco.ML\obj\Debug\net8.0\ProspEco.ML.csproj.CoreCompileInputs.cache
+C:\Users\HP\Downloads\novo\novo\ProspEco.API\ProspEco.ML\obj\Debug\net8.0\ProspEco.ML.sourcelink.json
 C:\Users\HP\Downloads\novo\novo\ProspEco.API\ProspEco.ML\obj\Debug\net8.0\ProspEco.ML.dll
 C:\Users\HP\Downloads\novo\novo\ProspEco.API\ProspEco.ML\obj\Debug\net8.0\refint\ProspEco.ML.dll
 C:\Users\HP\Downloads\novo\novo\ProspEco.API\ProspEco.ML\obj\Debug\net8.0\ProspEco.ML.pdb

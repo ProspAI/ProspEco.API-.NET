@@ -1,81 +1,99 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProspEco.Model.DTOs;
-using ProspEco.Service.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using ProspEco.Model.DTO.Request;
+using ProspEco.Model.DTO.Response;
+using ProspEco.Service;
 
-namespace ProspEco.API.Controllers
+namespace ProspEco.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsuariosController : ControllerBase
+    public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;
 
-        public UsuariosController(IUsuarioService usuarioService)
+        public UsuarioController(IUsuarioService usuarioService)
         {
             _usuarioService = usuarioService;
         }
 
-        // GET: api/Usuarios
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetUsuarios()
-        {
-            var usuarios = await _usuarioService.GetAllUsuariosAsync();
-            return Ok(usuarios);
-        }
-
-        // GET: api/Usuarios/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UsuarioDTO>> GetUsuario(long id)
-        {
-            var usuario = await _usuarioService.GetUsuarioByIdAsync(id);
-            if (usuario == null)
-            {
-                return NotFound(new { message = $"Usuário com ID {id} não encontrado." });
-            }
-            return Ok(usuario);
-        }
-
-        // GET: api/Usuarios/by-email/email@example.com
-        [HttpGet("by-email/{email}")]
-        public async Task<ActionResult<UsuarioDTO>> GetUsuarioByEmail(string email)
-        {
-            var usuario = await _usuarioService.GetUsuarioByEmailAsync(email);
-            if (usuario == null)
-            {
-                return NotFound(new { message = $"Usuário com email {email} não encontrado." });
-            }
-            return Ok(usuario);
-        }
-
-        // POST: api/Usuarios
         [HttpPost]
-        public async Task<ActionResult<UsuarioDTO>> CreateUsuario(UsuarioDTO usuarioDTO)
+        public async Task<IActionResult> AddUsuario([FromBody] UsuarioRequest usuarioRequest)
         {
-            var novoUsuario = await _usuarioService.CreateUsuarioAsync(usuarioDTO);
-            return CreatedAtAction(nameof(GetUsuario), new { id = novoUsuario.Id }, novoUsuario);
-        }
-
-        // PUT: api/Usuarios/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUsuario(long id, UsuarioDTO usuarioDTO)
-        {
-            if (id != usuarioDTO.Id)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "ID do usuário na URL não corresponde ao ID no corpo da requisição." });
+                return BadRequest(ModelState);
             }
 
-            await _usuarioService.UpdateUsuarioAsync(id, usuarioDTO);
-            return NoContent();
+            try
+            {
+                await _usuarioService.AddUsuario(usuarioRequest);
+                return Created("", "Usuário criado com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao criar usuário: {ex.Message}");
+            }
         }
 
-        // DELETE: api/Usuarios/5
-        [HttpDelete("{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsuarios()
+        {
+            try
+            {
+                var usuarios = await _usuarioService.GetAllUsuarios();
+                return Ok(usuarios);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao buscar usuários: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{id:long}")]
+        public async Task<IActionResult> GetUsuarioById(long id)
+        {
+            try
+            {
+                var usuario = await _usuarioService.GetUsuarioById(id);
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpPut("{id:long}")]
+        public async Task<IActionResult> UpdateUsuario(long id, [FromBody] UsuarioRequest usuarioRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _usuarioService.UpdateUsuario(id, usuarioRequest);
+                return NoContent(); // Atualização bem-sucedida
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao atualizar usuário: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{id:long}")]
         public async Task<IActionResult> DeleteUsuario(long id)
         {
-            await _usuarioService.DeleteUsuarioAsync(id);
-            return NoContent();
+            try
+            {
+                await _usuarioService.DeleteUsuario(id);
+                return NoContent(); // Exclusão bem-sucedida
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }
