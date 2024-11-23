@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProspEco.API", "ProspEco.API.csproj", "{6DAA5831-89B6-432E-9652-99A9023C201C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProspEco.Database", "..\ProspEco.Database\ProspEco.Database.csproj", "{DBBB9F7A-1C43-406A-A6F8-6ED75106061C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProspEco.Model", "..\ProspEco.Model\ProspEco.Model.csproj", "{F92FD10B-9E0D-4519-B9FC-8655211E4735}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProspEco.Repository", "..\ProspEco.Repository\ProspEco.Repository.csproj", "{D778C0C2-6CC3-4E64-87C2-899053323539}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProspEco.Service", "..\ProspEco.Service\ProspEco.Service.csproj", "{47DC08BA-1AC0-4838-AE28-A500453AD72E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProspEco.Test", "..\ProspEco.Test\ProspEco.Test.csproj", "{2C0F8C27-74EE-43A5-92DF-B8D545D7D812}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProspEco.ML", "ProspEco.ML\ProspEco.ML.csproj", "{E06062C1-C98C-404B-844C-3D1C02F2F854}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DAA5831-89B6-432E-9652-99A9023C201C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DAA5831-89B6-432E-9652-99A9023C201C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DAA5831-89B6-432E-9652-99A9023C201C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DAA5831-89B6-432E-9652-99A9023C201C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBBB9F7A-1C43-406A-A6F8-6ED75106061C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBBB9F7A-1C43-406A-A6F8-6ED75106061C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBBB9F7A-1C43-406A-A6F8-6ED75106061C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBBB9F7A-1C43-406A-A6F8-6ED75106061C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F92FD10B-9E0D-4519-B9FC-8655211E4735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F92FD10B-9E0D-4519-B9FC-8655211E4735}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F92FD10B-9E0D-4519-B9FC-8655211E4735}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F92FD10B-9E0D-4519-B9FC-8655211E4735}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D778C0C2-6CC3-4E64-87C2-899053323539}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D778C0C2-6CC3-4E64-87C2-899053323539}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D778C0C2-6CC3-4E64-87C2-899053323539}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D778C0C2-6CC3-4E64-87C2-899053323539}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47DC08BA-1AC0-4838-AE28-A500453AD72E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47DC08BA-1AC0-4838-AE28-A500453AD72E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47DC08BA-1AC0-4838-AE28-A500453AD72E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47DC08BA-1AC0-4838-AE28-A500453AD72E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C0F8C27-74EE-43A5-92DF-B8D545D7D812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C0F8C27-74EE-43A5-92DF-B8D545D7D812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C0F8C27-74EE-43A5-92DF-B8D545D7D812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C0F8C27-74EE-43A5-92DF-B8D545D7D812}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E06062C1-C98C-404B-844C-3D1C02F2F854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E06062C1-C98C-404B-844C-3D1C02F2F854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E06062C1-C98C-404B-844C-3D1C02F2F854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E06062C1-C98C-404B-844C-3D1C02F2F854}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0DA166B2-B0BB-4730-B9B7-DBDB213DEEE1}
+	EndGlobalSection
+EndGlobal

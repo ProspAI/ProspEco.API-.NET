@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.Oracle" Version="8.0.1" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Middleware" Version="5.6.1" />
+    <PackageReference Include="MiddlewareBuilder" Version="10.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.4" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProspEco.Database\ProspEco.Database.csproj" />
+    <ProjectReference Include="..\ProspEco.Model\ProspEco.Model.csproj" />
+    <ProjectReference Include="..\ProspEco.Repository\ProspEco.Repository.csproj" />
+    <ProjectReference Include="..\ProspEco.Service\ProspEco.Service.csproj" />
+    <ProjectReference Include="..\ProspEco.Test\ProspEco.Test.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ProspEco.ML\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="ProspEco.ML\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="ProspEco.ML\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ProspEco.ML\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="ProspEco.ML\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="ProspEco.ML\obj\project.packagespec.json" />
+    <_ContentIncludedByDefault Remove="ProspEco.ML\obj\ProspEco.ML.csproj.nuget.dgspec.json" />
+  </ItemGroup>
+
+</Project>

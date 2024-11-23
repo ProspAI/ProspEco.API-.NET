@@ -1,0 +1,17 @@
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Repository.deps.json
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Repository.dll
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Repository.pdb
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Database.dll
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Model.dll
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Database.pdb
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\bin\Debug\net8.0\ProspEco.Model.pdb
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.csproj.AssemblyReference.cache
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.AssemblyInfoInputs.cache
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.AssemblyInfo.cs
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.csproj.CoreCompileInputs.cache
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.94B9C5D2.Up2Date
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.dll
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\refint\ProspEco.Repository.dll
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ProspEco.Repository.pdb
+C:\Users\HP\Downloads\novo\novo\ProspEco.Repository\obj\Debug\net8.0\ref\ProspEco.Repository.dll
